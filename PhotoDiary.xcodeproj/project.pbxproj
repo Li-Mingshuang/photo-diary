@@ -1,0 +1,617 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		084B5E285FC5B7C89D6804EC /* ImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DA03648C7C8D6DDB1902C8 /* ImageProcessing.swift */; };
+		1AAB973C6A00B8DC759F9E97 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4C0E4FBA3A711BDDABD576 /* ContentView.swift */; };
+		2006BD7C9B8181753FE40C67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20D4CA9968E5F215B51550F9 /* Assets.xcassets */; };
+		21CB38DA869D67140AEF5B99 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C8A5DCDF4A05399AAAB8A8 /* SettingsView.swift */; };
+		23DA5A969ACA6055EA3E2470 /* LLMConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C07E052D5711BF6C50051D7 /* LLMConfiguration.swift */; };
+		297EC4B214C055600AEE1714 /* AddEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A647A006291AD2026FCE6B /* AddEntryView.swift */; };
+		2F127A3652AFF3789DAA1954 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AC826AAA3176EF48D949CC0 /* KeychainHelper.swift */; };
+		36F3031415304D2CCC800925 /* PhotoDiaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46E0489215D71A5344B0D4F /* PhotoDiaryUITests.swift */; };
+		3E1063296EF2030EE672E36E /* PromptBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CBEE66D4B0A8C8CE4BDF38 /* PromptBuilder.swift */; };
+		4F8519300D828E6FA257B79D /* PhotoImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AF23779A3C739F6B0E6056 /* PhotoImporter.swift */; };
+		508F73EC7471D5CFDD35BE5C /* MarkdownDiaryCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62946E04FC9DFFE4697B4FF7 /* MarkdownDiaryCodec.swift */; };
+		5C397329ECACE9938024E0C3 /* Thumbnailer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1478AD19E9A5B2747D446D58 /* Thumbnailer.swift */; };
+		5F2BFC4328F45B364D69888D /* LLMServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60B7BFB2BA6E940C81F6EAE /* LLMServiceTests.swift */; };
+		76AFBB891D50E632D6629F3C /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015C72643C12CF104FB6A76E /* LLMService.swift */; };
+		778F8622E660E8063429BE5D /* MarkdownDiaryCodecTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDF03BB8BFC4B8F930602AA /* MarkdownDiaryCodecTests.swift */; };
+		8AD7818F973A7422A2DABD83 /* CameraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3968E4BBA492CC3E9954FB9B /* CameraPicker.swift */; };
+		917F448ED763FE9A571514C1 /* PhotoDiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA31CD779635B1C9A0A285E /* PhotoDiaryApp.swift */; };
+		B4E6330EF971D3E4AB1608AB /* DiaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F2E3AF55495D84CD036CB1 /* DiaryStore.swift */; };
+		D210C1B8C31C9FDB4AAB5ADA /* DiaryStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB6343B51BCC98F61F83A3 /* DiaryStoreTests.swift */; };
+		DCB1015E9E3CE3A40A701B4A /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F421D41E32779BD4D7E44F8A /* DiaryEntry.swift */; };
+		E7F41A76D0308FFAE565872F /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FAAD53A3DCA6777838B96 /* LocationService.swift */; };
+		F4CE8D7DE6A742D7A3D4123E /* DayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336EEEA91F36DFCFE7221906 /* DayDetailView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		942CAB61F64961FB1B46BC38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51BACE3730715FD757666516 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27282719DBACEB9B80ED4D73;
+			remoteInfo = PhotoDiary;
+		};
+		E7FDF2CA83B85D888FB524D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 51BACE3730715FD757666516 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 27282719DBACEB9B80ED4D73;
+			remoteInfo = PhotoDiary;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		015C72643C12CF104FB6A76E /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
+		1478AD19E9A5B2747D446D58 /* Thumbnailer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnailer.swift; sourceTree = "<group>"; };
+		20D4CA9968E5F215B51550F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		26AF23779A3C739F6B0E6056 /* PhotoImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImporter.swift; sourceTree = "<group>"; };
+		336EEEA91F36DFCFE7221906 /* DayDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailView.swift; sourceTree = "<group>"; };
+		35C8A5DCDF4A05399AAAB8A8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3968E4BBA492CC3E9954FB9B /* CameraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPicker.swift; sourceTree = "<group>"; };
+		4F2FAAD53A3DCA6777838B96 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		58A647A006291AD2026FCE6B /* AddEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntryView.swift; sourceTree = "<group>"; };
+		5C07E052D5711BF6C50051D7 /* LLMConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMConfiguration.swift; sourceTree = "<group>"; };
+		5CA31CD779635B1C9A0A285E /* PhotoDiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDiaryApp.swift; sourceTree = "<group>"; };
+		5E79BEDC84E9F8C6ADF50553 /* PhotoDiaryUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PhotoDiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62946E04FC9DFFE4697B4FF7 /* MarkdownDiaryCodec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDiaryCodec.swift; sourceTree = "<group>"; };
+		8AC826AAA3176EF48D949CC0 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		94AB6343B51BCC98F61F83A3 /* DiaryStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryStoreTests.swift; sourceTree = "<group>"; };
+		99F2E3AF55495D84CD036CB1 /* DiaryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryStore.swift; sourceTree = "<group>"; };
+		9A4C0E4FBA3A711BDDABD576 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A5CBEE66D4B0A8C8CE4BDF38 /* PromptBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptBuilder.swift; sourceTree = "<group>"; };
+		A6FA2FBA5391009D9B0C1D48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C1DA03648C7C8D6DDB1902C8 /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
+		DC166D7DBA4B08A5DD8D8F41 /* PhotoDiary.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PhotoDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDDF03BB8BFC4B8F930602AA /* MarkdownDiaryCodecTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownDiaryCodecTests.swift; sourceTree = "<group>"; };
+		E2D13A4941E26AD67A722D64 /* PhotoDiaryTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PhotoDiaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F421D41E32779BD4D7E44F8A /* DiaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
+		F46E0489215D71A5344B0D4F /* PhotoDiaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDiaryUITests.swift; sourceTree = "<group>"; };
+		F60B7BFB2BA6E940C81F6EAE /* LLMServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMServiceTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		18987313DF8F7A56BD1E5EF2 /* PhotoDiary */ = {
+			isa = PBXGroup;
+			children = (
+				20D4CA9968E5F215B51550F9 /* Assets.xcassets */,
+				A6FA2FBA5391009D9B0C1D48 /* Info.plist */,
+				5CA31CD779635B1C9A0A285E /* PhotoDiaryApp.swift */,
+				4C0202A2A222A39CF98D3F9F /* Models */,
+				5953B36AE18E964F17D446C5 /* Services */,
+				9301BFCE2CD3B7581D99100D /* Storage */,
+				1EE16FA70F51727C926B329D /* Views */,
+			);
+			path = PhotoDiary;
+			sourceTree = "<group>";
+		};
+		1EE16FA70F51727C926B329D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				58A647A006291AD2026FCE6B /* AddEntryView.swift */,
+				3968E4BBA492CC3E9954FB9B /* CameraPicker.swift */,
+				9A4C0E4FBA3A711BDDABD576 /* ContentView.swift */,
+				336EEEA91F36DFCFE7221906 /* DayDetailView.swift */,
+				35C8A5DCDF4A05399AAAB8A8 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2626ED0B4704A4DA80AEEDE3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC166D7DBA4B08A5DD8D8F41 /* PhotoDiary.app */,
+				E2D13A4941E26AD67A722D64 /* PhotoDiaryTests.xctest */,
+				5E79BEDC84E9F8C6ADF50553 /* PhotoDiaryUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3928844854610370C16C332E = {
+			isa = PBXGroup;
+			children = (
+				18987313DF8F7A56BD1E5EF2 /* PhotoDiary */,
+				5C285496760089434C53679F /* PhotoDiaryTests */,
+				981ADEC8EA5C3BDCE2E63F6B /* PhotoDiaryUITests */,
+				2626ED0B4704A4DA80AEEDE3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4C0202A2A222A39CF98D3F9F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F421D41E32779BD4D7E44F8A /* DiaryEntry.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5953B36AE18E964F17D446C5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C1DA03648C7C8D6DDB1902C8 /* ImageProcessing.swift */,
+				8AC826AAA3176EF48D949CC0 /* KeychainHelper.swift */,
+				5C07E052D5711BF6C50051D7 /* LLMConfiguration.swift */,
+				015C72643C12CF104FB6A76E /* LLMService.swift */,
+				4F2FAAD53A3DCA6777838B96 /* LocationService.swift */,
+				26AF23779A3C739F6B0E6056 /* PhotoImporter.swift */,
+				A5CBEE66D4B0A8C8CE4BDF38 /* PromptBuilder.swift */,
+				1478AD19E9A5B2747D446D58 /* Thumbnailer.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5C285496760089434C53679F /* PhotoDiaryTests */ = {
+			isa = PBXGroup;
+			children = (
+				94AB6343B51BCC98F61F83A3 /* DiaryStoreTests.swift */,
+				F60B7BFB2BA6E940C81F6EAE /* LLMServiceTests.swift */,
+				DDDF03BB8BFC4B8F930602AA /* MarkdownDiaryCodecTests.swift */,
+			);
+			path = PhotoDiaryTests;
+			sourceTree = "<group>";
+		};
+		9301BFCE2CD3B7581D99100D /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				99F2E3AF55495D84CD036CB1 /* DiaryStore.swift */,
+				62946E04FC9DFFE4697B4FF7 /* MarkdownDiaryCodec.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		981ADEC8EA5C3BDCE2E63F6B /* PhotoDiaryUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F46E0489215D71A5344B0D4F /* PhotoDiaryUITests.swift */,
+			);
+			path = PhotoDiaryUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		27282719DBACEB9B80ED4D73 /* PhotoDiary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABDFE8D83A3126BE9FEEE30F /* Build configuration list for PBXNativeTarget "PhotoDiary" */;
+			buildPhases = (
+				8FAE208CEA53B7EC38A22C91 /* Sources */,
+				9343C061F3EE9ACDB7F0A67D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PhotoDiary;
+			packageProductDependencies = (
+			);
+			productName = PhotoDiary;
+			productReference = DC166D7DBA4B08A5DD8D8F41 /* PhotoDiary.app */;
+			productType = "com.apple.product-type.application";
+		};
+		971FA32ABDB3FDF2773A54DE /* PhotoDiaryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05D197F5989054143D3D3FA6 /* Build configuration list for PBXNativeTarget "PhotoDiaryTests" */;
+			buildPhases = (
+				7847F9C77268B4765834CFDC /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79C39639DBC65E3F5C5F0C74 /* PBXTargetDependency */,
+			);
+			name = PhotoDiaryTests;
+			packageProductDependencies = (
+			);
+			productName = PhotoDiaryTests;
+			productReference = E2D13A4941E26AD67A722D64 /* PhotoDiaryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9D562E948392EE8A4D945DDD /* PhotoDiaryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BA7A3D5E869D8A86EE0B195 /* Build configuration list for PBXNativeTarget "PhotoDiaryUITests" */;
+			buildPhases = (
+				A10E8BFD3B3A21AA48C72422 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EB054A1126E45D300EA8619E /* PBXTargetDependency */,
+			);
+			name = PhotoDiaryUITests;
+			packageProductDependencies = (
+			);
+			productName = PhotoDiaryUITests;
+			productReference = 5E79BEDC84E9F8C6ADF50553 /* PhotoDiaryUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		51BACE3730715FD757666516 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					27282719DBACEB9B80ED4D73 = {
+						ProvisioningStyle = Automatic;
+					};
+					9D562E948392EE8A4D945DDD = {
+						TestTargetID = 27282719DBACEB9B80ED4D73;
+					};
+				};
+			};
+			buildConfigurationList = 1230AF58DABE016B32736AEC /* Build configuration list for PBXProject "PhotoDiary" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 3928844854610370C16C332E;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2626ED0B4704A4DA80AEEDE3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				27282719DBACEB9B80ED4D73 /* PhotoDiary */,
+				971FA32ABDB3FDF2773A54DE /* PhotoDiaryTests */,
+				9D562E948392EE8A4D945DDD /* PhotoDiaryUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9343C061F3EE9ACDB7F0A67D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2006BD7C9B8181753FE40C67 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7847F9C77268B4765834CFDC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D210C1B8C31C9FDB4AAB5ADA /* DiaryStoreTests.swift in Sources */,
+				5F2BFC4328F45B364D69888D /* LLMServiceTests.swift in Sources */,
+				778F8622E660E8063429BE5D /* MarkdownDiaryCodecTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8FAE208CEA53B7EC38A22C91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297EC4B214C055600AEE1714 /* AddEntryView.swift in Sources */,
+				8AD7818F973A7422A2DABD83 /* CameraPicker.swift in Sources */,
+				1AAB973C6A00B8DC759F9E97 /* ContentView.swift in Sources */,
+				F4CE8D7DE6A742D7A3D4123E /* DayDetailView.swift in Sources */,
+				DCB1015E9E3CE3A40A701B4A /* DiaryEntry.swift in Sources */,
+				B4E6330EF971D3E4AB1608AB /* DiaryStore.swift in Sources */,
+				084B5E285FC5B7C89D6804EC /* ImageProcessing.swift in Sources */,
+				2F127A3652AFF3789DAA1954 /* KeychainHelper.swift in Sources */,
+				23DA5A969ACA6055EA3E2470 /* LLMConfiguration.swift in Sources */,
+				76AFBB891D50E632D6629F3C /* LLMService.swift in Sources */,
+				E7F41A76D0308FFAE565872F /* LocationService.swift in Sources */,
+				508F73EC7471D5CFDD35BE5C /* MarkdownDiaryCodec.swift in Sources */,
+				917F448ED763FE9A571514C1 /* PhotoDiaryApp.swift in Sources */,
+				4F8519300D828E6FA257B79D /* PhotoImporter.swift in Sources */,
+				3E1063296EF2030EE672E36E /* PromptBuilder.swift in Sources */,
+				21CB38DA869D67140AEF5B99 /* SettingsView.swift in Sources */,
+				5C397329ECACE9938024E0C3 /* Thumbnailer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10E8BFD3B3A21AA48C72422 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36F3031415304D2CCC800925 /* PhotoDiaryUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		79C39639DBC65E3F5C5F0C74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27282719DBACEB9B80ED4D73 /* PhotoDiary */;
+			targetProxy = E7FDF2CA83B85D888FB524D9 /* PBXContainerItemProxy */;
+		};
+		EB054A1126E45D300EA8619E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 27282719DBACEB9B80ED4D73 /* PhotoDiary */;
+			targetProxy = 942CAB61F64961FB1B46BC38 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		16E07A5391528A0DAB48755A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.photodiary.app.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoDiary.app/PhotoDiary";
+			};
+			name = Release;
+		};
+		54D15D687EC07ACE4C01E038 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.photodiary.app.tests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoDiary.app/PhotoDiary";
+			};
+			name = Debug;
+		};
+		6F2A9CD80AD804E34856EED2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8427EBCC5285FA89F54C41E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		BE998AD05B5B0A8EDC14BC38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.photodiary.app.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PhotoDiary;
+			};
+			name = Release;
+		};
+		C2CDDFA0209E05AB1B720A02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PhotoDiary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.photodiary.app;
+				PRODUCT_NAME = PhotoDiary;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		DE988014DA17716295C2275E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.photodiary.app.uitests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = PhotoDiary;
+			};
+			name = Debug;
+		};
+		EE8250FCD70F461E538BE176 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = PhotoDiary/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.photodiary.app;
+				PRODUCT_NAME = PhotoDiary;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05D197F5989054143D3D3FA6 /* Build configuration list for PBXNativeTarget "PhotoDiaryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54D15D687EC07ACE4C01E038 /* Debug */,
+				16E07A5391528A0DAB48755A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0BA7A3D5E869D8A86EE0B195 /* Build configuration list for PBXNativeTarget "PhotoDiaryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE988014DA17716295C2275E /* Debug */,
+				BE998AD05B5B0A8EDC14BC38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		1230AF58DABE016B32736AEC /* Build configuration list for PBXProject "PhotoDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6F2A9CD80AD804E34856EED2 /* Debug */,
+				8427EBCC5285FA89F54C41E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ABDFE8D83A3126BE9FEEE30F /* Build configuration list for PBXNativeTarget "PhotoDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE8250FCD70F461E538BE176 /* Debug */,
+				C2CDDFA0209E05AB1B720A02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 51BACE3730715FD757666516 /* Project object */;
+}

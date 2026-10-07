@@ -1,0 +1,156 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project PhotoDiary.xcodeproj -scheme PhotoDiary -destination "platform=iOS Simulator,name=iPhone 16 Pro" "-only-testing:PhotoDiaryUITests" test
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:FF9920D0-FDD2-4968-9002-B939C0FC7492, OS:18.5, name:iPhone 16 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:FF9920D0-FDD2-4968-9002-B939C0FC7492, OS:18.5, name:iPhone 16 Pro }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'PhotoDiaryUITests' in project 'PhotoDiary'
+        ➜ Explicit dependency on target 'PhotoDiary' in project 'PhotoDiary'
+    Target 'PhotoDiaryTests' in project 'PhotoDiary'
+        ➜ Explicit dependency on target 'PhotoDiary' in project 'PhotoDiary'
+    Target 'PhotoDiary' in project 'PhotoDiary' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/limingshuang/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary/PhotoDiary.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+
+2026-10-07 11:36:42.617307+0800 PhotoDiaryUITests-Runner[79703:10748607] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'All tests' started at 2026-10-07 11:36:45.614.
+Test Suite 'PhotoDiaryUITests.xctest' started at 2026-10-07 11:36:45.615.
+Test Suite 'PhotoDiaryUITests' started at 2026-10-07 11:36:45.615.
+Test Case '-[PhotoDiaryUITests.PhotoDiaryUITests testFullFlowWithScreenshots]' started.
+    t =     0.00s Start Test at 2026-10-07 11:36:45.615
+    t =     0.37s Set Up
+    t =     0.38s Open com.photodiary.app
+    t =     0.38s     Launch com.photodiary.app
+    t =     2.04s         Setting up automation session
+    t =     3.02s         Wait for com.photodiary.app to idle
+    t =     5.31s Waiting 5.0s for "光影日记" NavigationBar to exist
+    t =     6.42s     Checking `Expect predicate `existsNoRetry == 1` for object "光影日记" NavigationBar`
+    t =     6.50s         Checking existence of `"光影日记" NavigationBar`
+    t =     6.92s Tap "settingsButton" Button
+    t =     6.92s     Wait for com.photodiary.app to idle
+    t =     6.92s     Find the "settingsButton" Button
+    t =     6.94s     Check for interrupting elements affecting "settingsButton" Button
+    t =     7.01s     Synthesize event
+    t =     7.51s     Wait for com.photodiary.app to idle
+    t =     7.97s Waiting 5.0s for "设置" NavigationBar to exist
+    t =     9.01s     Checking `Expect predicate `existsNoRetry == 1` for object "设置" NavigationBar`
+    t =     9.01s         Checking existence of `"设置" NavigationBar`
+    t =     9.17s Tap "完成" Button
+    t =     9.17s     Wait for com.photodiary.app to idle
+    t =     9.18s     Find the "完成" Button
+    t =     9.22s     Check for interrupting elements affecting "完成" Button
+    t =     9.26s     Synthesize event
+    t =     9.56s     Wait for com.photodiary.app to idle
+    t =     9.95s Waiting 3.0s for "光影日记" NavigationBar to exist
+    t =    10.98s     Checking `Expect predicate `existsNoRetry == 1` for object "光影日记" NavigationBar`
+    t =    10.98s         Checking existence of `"光影日记" NavigationBar`
+    t =    11.00s Waiting 3.0s for "addEntryMenu" Button to exist
+    t =    12.04s     Checking `Expect predicate `existsNoRetry == 1` for object "addEntryMenu" Button`
+    t =    12.04s         Checking existence of `"addEntryMenu" Button`
+    t =    12.06s Tap "addEntryMenu" Button[0.50, 0.50]
+    t =    12.06s     Wait for com.photodiary.app to idle
+    t =    12.06s     Find the "addEntryMenu" Button
+    t =    12.08s     Check for interrupting elements affecting "addEntryMenu" Button
+    t =    12.10s     Synthesize event
+    t =    12.10s         Find the "addEntryMenu" Button
+    t =    12.11s         Find the "addEntryMenu" Button
+    t =    12.12s         Find the "addEntryMenu" Button
+    t =    12.42s     Wait for com.photodiary.app to idle
+    t =    12.42s Waiting 3.0s for "从相册导入" Button to exist
+    t =    13.46s     Checking `Expect predicate `existsNoRetry == 1` for object "从相册导入" Button`
+    t =    13.46s         Checking existence of `"从相册导入" Button`
+    t =    13.49s Tap "从相册导入" Button
+    t =    13.49s     Wait for com.photodiary.app to idle
+    t =    13.49s     Find the "从相册导入" Button
+    t =    13.51s     Check for interrupting elements affecting "photo.on.rectangle" Button
+    t =    13.52s     Synthesize event
+    t =    13.81s     Wait for com.photodiary.app to idle
+    t =    14.19s Waiting 10.0s for Image (Element at index 0) to exist
+    t =    15.25s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    15.26s         Checking existence of `Image (Element at index 0)`
+    t =    15.29s         Capturing element debug description
+    t =    16.21s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    16.22s         Checking existence of `Image (Element at index 0)`
+    t =    16.23s         Capturing element debug description
+    t =    17.27s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    17.27s         Checking existence of `Image (Element at index 0)`
+    t =    17.83s Tap Image (Element at index 0)
+    t =    17.83s     Wait for com.photodiary.app to idle
+    t =    17.83s     Find the Image (Element at index 0)
+    t =    17.99s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    18.10s     Synthesize event
+    t =    18.41s     Wait for com.photodiary.app to idle
+    t =    18.92s Waiting 5.0s for "新日记" NavigationBar to exist
+    t =    19.95s     Checking `Expect predicate `existsNoRetry == 1` for object "新日记" NavigationBar`
+    t =    19.96s         Checking existence of `"新日记" NavigationBar`
+    t =    21.19s Waiting 3.0s for "diaryTextEditor" TextView to exist
+    t =    22.24s     Checking `Expect predicate `existsNoRetry == 1` for object "diaryTextEditor" TextView`
+    t =    22.25s         Checking existence of `"diaryTextEditor" TextView`
+    t =    22.29s Tap "diaryTextEditor" TextView
+    t =    22.29s     Wait for com.photodiary.app to idle
+    t =    22.30s     Find the "diaryTextEditor" TextView
+    t =    22.32s     Check for interrupting elements affecting "diaryTextEditor" TextView
+    t =    22.35s     Synthesize event
+    t =    22.64s     Wait for com.photodiary.app to idle
+    t =    23.49s Type '今天下午在公园散步，阳光很好，银杏叶...' into "diaryTextEditor" TextView
+    t =    23.49s     Wait for com.photodiary.app to idle
+    t =    23.94s     Find the "diaryTextEditor" TextView
+    t =    24.02s     Check for interrupting elements affecting "diaryTextEditor" TextView
+    t =    24.05s     Synthesize event
+    t =    24.79s     Wait for com.photodiary.app to idle
+    t =    24.85s Tap "保存" Button
+    t =    24.85s     Wait for com.photodiary.app to idle
+    t =    24.85s     Find the "保存" Button
+    t =    24.89s     Check for interrupting elements affecting "保存" Button
+    t =    24.94s     Synthesize event
+    t =    25.24s     Wait for com.photodiary.app to idle
+    t =    25.47s Waiting 5.0s for Cell (First Match) to exist
+    t =    26.51s     Checking `Expect predicate `existsNoRetry == 1` for object Cell (First Match)`
+    t =    26.51s         Checking existence of `Cell (First Match)`
+    t =    26.59s Tap Cell (First Match)
+    t =    26.59s     Wait for com.photodiary.app to idle
+    t =    26.59s     Find the Cell (First Match)
+    t =    26.62s     Check for interrupting elements affecting Cell
+    t =    26.64s     Synthesize event
+    t =    26.94s     Wait for com.photodiary.app to idle
+    t =    28.15s Waiting 3.0s for StaticText (First Match) to exist
+    t =    29.19s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    29.19s         Checking existence of `StaticText (First Match)`
+    t =    29.28s Tear Down
+Test Case '-[PhotoDiaryUITests.PhotoDiaryUITests testFullFlowWithScreenshots]' passed (29.728 seconds).
+Test Suite 'PhotoDiaryUITests' passed at 2026-10-07 11:37:15.343.
+	 Executed 1 test, with 0 failures (0 unexpected) in 29.728 (29.728) seconds
+Test Suite 'PhotoDiaryUITests.xctest' passed at 2026-10-07 11:37:15.344.
+	 Executed 1 test, with 0 failures (0 unexpected) in 29.728 (29.729) seconds
+Test Suite 'All tests' passed at 2026-10-07 11:37:15.344.
+	 Executed 1 test, with 0 failures (0 unexpected) in 29.728 (29.730) seconds
+2026-10-07 11:37:16.010 xcodebuild[79503:10747064] [MT] IDETestOperationsObserverDebug: 55.974 elapsed -- Testing started completed.
+2026-10-07 11:37:16.011 xcodebuild[79503:10747064] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-07 11:37:16.011 xcodebuild[79503:10747064] [MT] IDETestOperationsObserverDebug: 55.974 sec, +55.974 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Logs/Test/Test-PhotoDiary-2026.10.07_11-36-18-+0800.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

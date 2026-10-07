@@ -1,0 +1,61 @@
+name: PhotoDiary
+options:
+  bundleIdPrefix: com.photodiary
+targets:
+  PhotoDiary:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - PhotoDiary
+    settings:
+      base:
+        INFOPLIST_FILE: PhotoDiary/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.photodiary.app
+        PRODUCT_NAME: PhotoDiary
+        TARGETED_DEVICE_FAMILY: 1
+        SWIFT_VERSION: "5.0"
+        IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+        CODE_SIGN_STYLE: Automatic
+  PhotoDiaryTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - PhotoDiaryTests
+    dependencies:
+      - target: PhotoDiary
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.photodiary.app.tests
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        BUNDLE_LOADER: $(TEST_HOST)
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/PhotoDiary.app/PhotoDiary
+  PhotoDiaryUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - PhotoDiaryUITests
+    dependencies:
+      - target: PhotoDiary
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.photodiary.app.uitests
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: PhotoDiary
+schemes:
+  PhotoDiary:
+    build:
+      targets:
+        PhotoDiary: all
+        PhotoDiaryTests:
+          - test
+        PhotoDiaryUITests:
+          - test
+    test:
+      targets:
+        - PhotoDiaryTests
+        - PhotoDiaryUITests
