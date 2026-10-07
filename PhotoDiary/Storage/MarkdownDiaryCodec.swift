@@ -28,6 +28,9 @@ enum MarkdownDiaryCodec {
         return f
     }()
 
+    /// 「当日小结」的条目标题
+    static let summaryHeader = "## 当日小结"
+
     // MARK: - 渲染
 
     static func render(dayKey: String, entries: [DiaryEntry]) -> String {
@@ -35,20 +38,30 @@ enum MarkdownDiaryCodec {
         lines.append("# \(titleLine(for: dayKey))")
         lines.append("")
 
-        let sorted = entries.sorted { $0.createdAt < $1.createdAt }
-        for (index, entry) in sorted.enumerated() {
-            var header = "## \(entry.timeString)"
-            if let location = entry.locationName, !location.isEmpty {
-                header += " · \(location)"
+        // 当日小结排在最前，普通条目按时间升序
+        let sorted = entries.sorted {
+            ($0.isDaySummary ? 0 : 1, $0.createdAt) < ($1.isDaySummary ? 0 : 1, $1.createdAt)
+        }
+
+        var blocks: [String] = []
+        for entry in sorted {
+            var block: [String] = []
+            if entry.isDaySummary {
+                block.append(summaryHeader)
+            } else {
+                var header = "## \(entry.timeString)"
+                if let location = entry.locationName, !location.isEmpty {
+                    header += " · \(location)"
+                }
+                block.append(header)
             }
-            lines.append(header)
-            lines.append("")
+            block.append("")
             // 隐藏行：带时区的精确时间戳
-            lines.append("<!-- \(isoFormatter.string(from: entry.createdAt)) -->")
-            lines.append("")
+            block.append("<!-- \(isoFormatter.string(from: entry.createdAt)) -->")
+            block.append("")
             if let imageName = entry.imageFileName {
-                lines.append("![照片](images/\(imageName))")
-                lines.append("")
+                block.append("![照片](images/\(imageName))")
+                block.append("")
             }
             let text = entry.text.trimmingCharacters(in: .whitespacesAndNewlines)
             if !text.isEmpty {
@@ -56,14 +69,12 @@ enum MarkdownDiaryCodec {
                     .components(separatedBy: .newlines)
                     .map { escapeTextLine($0) }
                     .joined(separator: "\n")
-                lines.append(escaped)
-                lines.append("")
+                block.append(escaped)
+                block.append("")
             }
-            if index < sorted.count - 1 {
-                lines.append("---")
-                lines.append("")
-            }
+            blocks.append(block.joined(separator: "\n"))
         }
+        lines.append(blocks.joined(separator: "---\n\n"))
         return lines.joined(separator: "\n") + "\n"
     }
 
@@ -103,6 +114,21 @@ enum MarkdownDiaryCodec {
         for rawLine in markdown.components(separatedBy: .newlines) {
             let line = rawLine.trimmingCharacters(in: .whitespaces)
 
+            if line == summaryHeader {
+                flushCurrent()
+                var components = calendar.dateComponents([.year, .month, .day], from: dayStart)
+                components.hour = 23
+                components.minute = 59
+                current = DiaryEntry(
+                    createdAt: calendar.date(from: components) ?? dayStart,
+                    text: "",
+                    imageFileName: nil,
+                    locationName: nil,
+                    isDaySummary: true
+                )
+                continue
+            }
+
             if let (time, location) = parseEntryHeader(line) {
                 flushCurrent()
                 var components = calendar.dateComponents([.year, .month, .day], from: dayStart)
@@ -129,7 +155,7 @@ enum MarkdownDiaryCodec {
             // 转义行：还原为普通正文
             if line.hasPrefix("\\") {
                 let unescaped = String(line.dropFirst())
-                if unescaped == "---" || parseEntryHeader(unescaped) != nil || parseImageLine(unescaped) != nil {
+                if unescaped == "---" || unescaped == summaryHeader || parseEntryHeader(unescaped) != nil || parseImageLine(unescaped) != nil {
                     textLines.append(unescaped)
                     continue
                 }
@@ -149,7 +175,10 @@ enum MarkdownDiaryCodec {
         }
         flushCurrent()
 
-        return entries.sorted { $0.createdAt < $1.createdAt }
+        // 与渲染保持一致：当日小结在前，普通条目按时间升序
+        return entries.sorted {
+            ($0.isDaySummary ? 0 : 1, $0.createdAt) < ($1.isDaySummary ? 0 : 1, $1.createdAt)
+        }
     }
 
     /// 解析 `<!-- 2026-10-07T14:30:00+08:00 -->` 时间戳注释行
@@ -159,10 +188,10 @@ enum MarkdownDiaryCodec {
         return isoFormatter.date(from: String(inner))
     }
 
-    /// 正文行若与日记语法冲突（分隔线/条目标题/图片行），加反斜杠转义
+    /// 正文行若与日记语法冲突（分隔线/条目标题/小结标题/图片行），加反斜杠转义
     static func escapeTextLine(_ line: String) -> String {
         let trimmed = line.trimmingCharacters(in: .whitespaces)
-        if trimmed == "---" || parseEntryHeader(trimmed) != nil || parseImageLine(trimmed) != nil {
+        if trimmed == "---" || trimmed == summaryHeader || parseEntryHeader(trimmed) != nil || parseImageLine(trimmed) != nil {
             return "\\" + line
         }
         return line

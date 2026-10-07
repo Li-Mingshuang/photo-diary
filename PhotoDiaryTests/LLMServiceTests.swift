@@ -90,6 +90,24 @@ final class LLMServiceTests: XCTestCase {
         XCTAssertEqual(json["stream"] as? Bool, false)
     }
 
+    func testMakeBodyMultipleImages() throws {
+        let body = try LLMService.makeBody(
+            model: "m",
+            prompt: "p",
+            imagesJPEGData: [Data([0x01]), Data([0x02]), Data([0x03])],
+            stream: false
+        )
+        let json = try XCTUnwrap(JSONSerialization.jsonObject(with: body) as? [String: Any])
+        let messages = try XCTUnwrap(json["messages"] as? [[String: Any]])
+        let content = try XCTUnwrap(messages[0]["content"] as? [[String: Any]])
+        // 1 个文本块 + 3 个图片块
+        XCTAssertEqual(content.count, 4)
+        XCTAssertEqual(content[0]["type"] as? String, "text")
+        XCTAssertEqual(content[1]["type"] as? String, "image_url")
+        XCTAssertEqual(content[2]["type"] as? String, "image_url")
+        XCTAssertEqual(content[3]["type"] as? String, "image_url")
+    }
+
     func testDeepSeekPresetDisablesThinking() {
         let extra = try! XCTUnwrap(LLMPresets.deepSeekFlash.extraBodyJSON)
         XCTAssertTrue(extra.contains("\"disabled\""))

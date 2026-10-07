@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var draft: EntryDraft?
     @State private var importError: String?
     @State private var locationPrefetch: Task<CLLocation?, Never>?
+    @State private var searchText = ""
 
     private var cameraAvailable: Bool {
         UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -81,6 +82,11 @@ struct ContentView: View {
         }
     }
 
+    /// 搜索过滤后的日记列表
+    private var displayedDays: [DiaryDay] {
+        DiarySearch.filter(store.days, query: searchText)
+    }
+
     @ViewBuilder
     private var content: some View {
         if store.days.isEmpty {
@@ -89,16 +95,41 @@ struct ContentView: View {
             } description: {
                 Text("点右上角 + 拍照或导入照片，\nAI 会自动帮你写好今天的日记。")
                     .multilineTextAlignment(.center)
+            } actions: {
+                // 首次使用引导：先填 Key
+                if !llmConfig.hasAPIKey {
+                    Button("先设置 API Key") {
+                        showingSettings = true
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
             }
+        } else if displayedDays.isEmpty {
+            ContentUnavailableView.search(text: searchText)
         } else {
-            List(store.days) { day in
-                NavigationLink {
-                    DayDetailView(dayKey: day.key, store: store, config: llmConfig)
-                } label: {
-                    DayRowView(day: day, store: store)
+            List {
+                // 未配置 Key 时的常驻引导横幅
+                if !llmConfig.hasAPIKey {
+                    Section {
+                        Button {
+                            showingSettings = true
+                        } label: {
+                            Label("还没有设置 API Key，点这里配置后 AI 才能写日记", systemImage: "key.fill")
+                                .font(.footnote)
+                                .foregroundStyle(.orange)
+                        }
+                    }
+                }
+                ForEach(displayedDays) { day in
+                    NavigationLink {
+                        DayDetailView(dayKey: day.key, store: store, config: llmConfig)
+                    } label: {
+                        DayRowView(day: day, store: store)
+                    }
                 }
             }
             .listStyle(.plain)
+            .searchable(text: $searchText, prompt: "搜索正文、地点、日期")
         }
     }
 

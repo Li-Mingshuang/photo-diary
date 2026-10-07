@@ -22,4 +22,21 @@ enum PromptBuilder {
             .replacingOccurrences(of: "{time}", with: timeFormatter.string(from: date))
             .replacingOccurrences(of: "{location}", with: locationName ?? "未知")
     }
+
+    /// 「当日小结」prompt：填充照片数量与逐条时间线
+    static func buildDaySummaryPrompt(template: String, entries: [DiaryEntry]) -> String {
+        let timeline = entries
+            .sorted { $0.createdAt < $1.createdAt }
+            .map { entry in
+                var line = "- \(entry.timeString)"
+                if let location = entry.locationName, !location.isEmpty {
+                    line += " · \(location)"
+                }
+                return line
+            }
+            .joined(separator: "\n")
+        return template
+            .replacingOccurrences(of: "{count}", with: "\(entries.count)")
+            .replacingOccurrences(of: "{timeline}", with: timeline)
+    }
 }

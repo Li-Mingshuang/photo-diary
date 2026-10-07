@@ -11,6 +11,8 @@ struct AddEntryView: View {
     @State private var isGenerating = false
     @State private var errorMessage: String?
     @State private var didAutoGenerate = false
+    @State private var generateTask: Task<Void, Never>?
+    @State private var showingSettings = false
 
     var body: some View {
         NavigationStack {
@@ -39,13 +41,21 @@ struct AddEntryView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                             Spacer()
-                            Button {
-                                Task { await generate() }
-                            } label: {
-                                Label("重新生成", systemImage: "arrow.clockwise")
-                                    .font(.subheadline)
+                            if isGenerating {
+                                Button(role: .cancel) {
+                                    generateTask?.cancel()
+                                } label: {
+                                    Label("停止", systemImage: "stop.circle")
+                                        .font(.subheadline)
+                                }
+                            } else {
+                                Button {
+                                    startGeneration()
+                                } label: {
+                                    Label("重新生成", systemImage: "arrow.clockwise")
+                                        .font(.subheadline)
+                                }
                             }
-                            .disabled(isGenerating)
                         }
 
                         TextEditor(text: $text)
@@ -61,6 +71,14 @@ struct AddEntryView: View {
                         Label(errorMessage, systemImage: "exclamationmark.triangle")
                             .font(.footnote)
                             .foregroundStyle(.red)
+                        // 缺 Key 时给出直达设置的入口
+                        if !config.hasAPIKey {
+                            Button("去设置 API Key") {
+                                showingSettings = true
+                            }
+                            .font(.footnote)
+                            .buttonStyle(.bordered)
+                        }
                     }
                 }
                 .padding()
@@ -79,9 +97,17 @@ struct AddEntryView: View {
             .task {
                 guard !didAutoGenerate else { return }
                 didAutoGenerate = true
-                await generate()
+                startGeneration()
+            }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView(config: config)
             }
         }
+    }
+
+    private func startGeneration() {
+        generateTask?.cancel()
+        generateTask = Task { await generate() }
     }
 
     private var metadataSection: some View {
@@ -121,6 +147,7 @@ struct AddEntryView: View {
             }
             text = accumulated.trimmingCharacters(in: .whitespacesAndNewlines)
         } catch {
+            if Task.isCancelled { return } // 用户主动停止，保留已生成部分
             errorMessage = error.localizedDescription
         }
     }

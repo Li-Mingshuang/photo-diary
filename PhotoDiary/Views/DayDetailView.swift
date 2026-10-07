@@ -8,6 +8,9 @@ struct DayDetailView: View {
 
     @State private var editingEntry: DiaryEntry?
     @State private var regeneratingEntryID: UUID?
+    @State private var regenerateTask: Task<Void, Never>?
+    @State private var isSummarizing = false
+    @State private var summaryTask: Task<Void, Never>?
     @State private var actionError: String?
 
     private var day: DiaryDay? {
@@ -25,7 +28,7 @@ struct DayDetailView: View {
                                 imageURL: entry.imageFileName.map { store.imageURL(for: $0) },
                                 isRegenerating: regeneratingEntryID == entry.id,
                                 onEdit: { editingEntry = entry },
-                                onRegenerate: { Task { await regenerate(entry) } },
+                                onRegenerate: { startRegenerate(entry) },
                                 onDelete: { store.deleteEntry(entry) }
                             )
                         }
@@ -40,8 +43,25 @@ struct DayDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                ShareLink(item: store.markdownURL(forDayKey: dayKey)) {
-                    Image(systemName: "square.and.arrow.up")
+                HStack(spacing: 16) {
+                    // 当日小结：把一天的照片合并生成一篇
+                    if isSummarizing {
+                        Button {
+                            summaryTask?.cancel()
+                        } label: {
+                            ProgressView()
+                        }
+                    } else {
+                        Button {
+                            startSummary()
+                        } label: {
+                            Image(systemName: "text.quote")
+                        }
+                        .accessibilityIdentifier("daySummaryButton")
+                    }
+                    ShareLink(item: store.markdownURL(forDayKey: dayKey)) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
                 }
             }
         }
@@ -55,6 +75,11 @@ struct DayDetailView: View {
         } message: {
             Text(actionError ?? "")
         }
+    }
+
+    private func startRegenerate(_ entry: DiaryEntry) {
+        regenerateTask?.cancel()
+        regenerateTask = Task { await regenerate(entry) }
     }
 
     private func regenerate(_ entry: DiaryEntry) async {
@@ -90,7 +115,68 @@ struct DayDetailView: View {
             updated.text = accumulated.trimmingCharacters(in: .whitespacesAndNewlines)
             store.updateEntry(updated)
         } catch {
+            if Task.isCancelled { return } // 用户主动停止，保留已生成部分
             actionError = error.localizedDescription
+        }
+    }
+
+    // MARK: - 当日小结
+
+    private func startSummary() {
+        guard config.hasAPIKey else {
+            actionError = "还没有配置 API Key，请先在设置中填写。"
+            return
+        }
+        summaryTask?.cancel()
+        summaryTask = Task { await generateDaySummary() }
+    }
+
+    private func generateDaySummary() async {
+        let photoEntries = (day?.entries ?? []).filter { $0.imageFileName != nil && !$0.isDaySummary }
+        guard !photoEntries.isEmpty else {
+            actionError = "今天还没有带照片的记录，无法生成小结。"
+            return
+        }
+        isSummarizing = true
+        defer { isSummarizing = false }
+        // 多图合并时单图降得更小，控制请求体总量
+        let images = photoEntries.compactMap { entry -> Data? in
+            guard let fileName = entry.imageFileName,
+                  let image = Thumbnailer.image(at: store.imageURL(for: fileName), maxPixelSize: 1024) else { return nil }
+            return image.jpegData(compressionQuality: 0.6)
+        }
+        let prompt = PromptBuilder.buildDaySummaryPrompt(template: DefaultPrompt.daySummaryTemplate, entries: photoEntries)
+        var accumulated = ""
+        do {
+            for try await delta in LLMService().chatStreamMulti(
+                prompt: prompt,
+                imagesJPEGData: images,
+                config: config.preset,
+                apiKey: config.apiKey()
+            ) {
+                accumulated += delta
+                upsertSummary(accumulated)
+            }
+            upsertSummary(accumulated.trimmingCharacters(in: .whitespacesAndNewlines))
+        } catch {
+            if Task.isCancelled { return }
+            actionError = error.localizedDescription
+        }
+    }
+
+    /// 已有小结则更新，没有则新建（createdAt 取当天 23:59，排序在最后）
+    private func upsertSummary(_ text: String) {
+        if let existing = day?.entries.first(where: { $0.isDaySummary }) {
+            var updated = existing
+            updated.text = text
+            store.updateEntry(updated)
+        } else {
+            var components = Calendar.current.dateComponents([.year, .month, .day], from: DayKey.date(for: dayKey) ?? Date())
+            components.hour = 23
+            components.minute = 59
+            let createdAt = Calendar.current.date(from: components) ?? Date()
+            let entry = DiaryEntry(createdAt: createdAt, text: text, isDaySummary: true)
+            try? store.addEntry(entry, image: nil)
         }
     }
 }
@@ -107,8 +193,14 @@ private struct EntryCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 6) {
-                Text(entry.timeString)
-                    .font(.subheadline.bold())
+                if entry.isDaySummary {
+                    Label("当日小结", systemImage: "sparkles")
+                        .font(.subheadline.bold())
+                        .foregroundStyle(.orange)
+                } else {
+                    Text(entry.timeString)
+                        .font(.subheadline.bold())
+                }
                 if let location = entry.locationName {
                     Text("·")
                         .foregroundStyle(.secondary)
@@ -122,8 +214,10 @@ private struct EntryCardView: View {
                     Button(action: onEdit) {
                         Label("编辑", systemImage: "pencil")
                     }
-                    Button(action: onRegenerate) {
-                        Label("重新生成", systemImage: "arrow.clockwise")
+                    if !entry.isDaySummary {
+                        Button(action: onRegenerate) {
+                            Label("重新生成", systemImage: "arrow.clockwise")
+                        }
                     }
                     Button(role: .destructive, action: onDelete) {
                         Label("删除", systemImage: "trash")
@@ -157,7 +251,7 @@ private struct EntryCardView: View {
             }
         }
         .padding()
-        .background(Color(.secondarySystemBackground))
+        .background(entry.isDaySummary ? Color.orange.opacity(0.08) : Color(.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 

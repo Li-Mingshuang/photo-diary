@@ -32,16 +32,22 @@ struct LLMService {
         return try Self.parseResponse(data: data, response: response)
     }
 
-    /// 流式生成（SSE），逐段产出文本增量，适合边生成边展示
+    /// 流式生成（SSE，单图便捷版）
     func chatStream(prompt: String, imageJPEGData: Data?, config: LLMPreset, apiKey: String) -> AsyncThrowingStream<String, Error> {
+        chatStreamMulti(prompt: prompt, imagesJPEGData: imageJPEGData.map { [$0] } ?? [], config: config, apiKey: apiKey)
+    }
+
+    /// 流式生成（SSE，多图版），逐段产出文本增量。
+    /// 调用方取消消费（Task.cancel / 视图消失）时，底层网络任务会被一并取消。
+    func chatStreamMulti(prompt: String, imagesJPEGData: [Data], config: LLMPreset, apiKey: String) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
-            Task {
+            let task = Task {
                 do {
                     let request = try Self.makeRequest(
                         config: config,
                         apiKey: apiKey,
                         prompt: prompt,
-                        imageJPEGData: config.supportsVision ? imageJPEGData : nil,
+                        imagesJPEGData: config.supportsVision ? imagesJPEGData : [],
                         stream: true
                     )
                     let (bytes, response) = try await session.bytes(for: request)
@@ -57,6 +63,7 @@ struct LLMService {
                         )
                     }
                     for try await line in bytes.lines {
+                        try Task.checkCancellation()
                         switch Self.parseSSELine(line) {
                         case .delta(let text):
                             continuation.yield(text)
@@ -68,10 +75,13 @@ struct LLMService {
                         }
                     }
                     continuation.finish()
+                } catch is CancellationError {
+                    continuation.finish()
                 } catch {
                     continuation.finish(throwing: error)
                 }
             }
+            continuation.onTermination = { _ in task.cancel() }
         }
     }
 
@@ -83,13 +93,18 @@ struct LLMService {
     // MARK: - 纯函数，便于单元测试
 
     static func makeRequest(config: LLMPreset, apiKey: String, prompt: String, imageJPEGData: Data?, stream: Bool = false) throws -> URLRequest {
+        try makeRequest(config: config, apiKey: apiKey, prompt: prompt, imagesJPEGData: imageJPEGData.map { [$0] } ?? [], stream: stream)
+    }
+
+    static func makeRequest(config: LLMPreset, apiKey: String, prompt: String, imagesJPEGData: [Data], stream: Bool) throws -> URLRequest {
         let base = config.baseURL
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
         guard !base.isEmpty, let url = URL(string: base + "/chat/completions") else {
             throw LLMError.invalidURL
         }
-        var request = URLRequest(url: url, timeoutInterval: 120)
+        // 60s 无数据即超时；流式场景下每收到一块数据会重置计时
+        var request = URLRequest(url: url, timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
@@ -99,7 +114,7 @@ struct LLMService {
         request.httpBody = try makeBody(
             model: config.model,
             prompt: prompt,
-            imageJPEGData: imageJPEGData,
+            imagesJPEGData: imagesJPEGData,
             stream: stream,
             extraBodyJSON: config.extraBodyJSON
         )
@@ -107,13 +122,17 @@ struct LLMService {
     }
 
     static func makeBody(model: String, prompt: String, imageJPEGData: Data?, stream: Bool = false, extraBodyJSON: String? = nil) throws -> Data {
+        try makeBody(model: model, prompt: prompt, imagesJPEGData: imageJPEGData.map { [$0] } ?? [], stream: stream, extraBodyJSON: extraBodyJSON)
+    }
+
+    static func makeBody(model: String, prompt: String, imagesJPEGData: [Data], stream: Bool = false, extraBodyJSON: String? = nil) throws -> Data {
         var content: [[String: Any]] = [
             ["type": "text", "text": prompt]
         ]
-        if let imageJPEGData {
+        for imageData in imagesJPEGData {
             content.append([
                 "type": "image_url",
-                "image_url": ["url": "data:image/jpeg;base64,\(imageJPEGData.base64EncodedString())"],
+                "image_url": ["url": "data:image/jpeg;base64,\(imageData.base64EncodedString())"],
             ])
         }
         var payload: [String: Any] = [

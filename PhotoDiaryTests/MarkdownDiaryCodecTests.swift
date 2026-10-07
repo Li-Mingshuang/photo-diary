@@ -150,6 +150,87 @@ final class MarkdownDiaryCodecTests: XCTestCase {
         XCTAssertEqual(parsed[0].text, trickyText)
     }
 
+    func testDaySummaryRenderAndParseRoundTrip() {
+        let dayKey = "2026-10-07"
+        let summary = DiaryEntry(
+            createdAt: makeDate(dayKey, "23:59"),
+            text: "今天是充实的一天，上午爬山下午看海。",
+            isDaySummary: true
+        )
+        let regular = DiaryEntry(
+            createdAt: makeDate(dayKey, "14:30"),
+            text: "下午在公园散步。",
+            imageFileName: "IMG_1.jpg",
+            locationName: "公园"
+        )
+        let markdown = MarkdownDiaryCodec.render(dayKey: dayKey, entries: [regular, summary])
+
+        // 小结渲染在最前面
+        let summaryRange = markdown.range(of: "## 当日小结")!
+        let regularRange = markdown.range(of: "## 14:30 · 公园")!
+        XCTAssertTrue(summaryRange.lowerBound < regularRange.lowerBound)
+
+        let parsed = MarkdownDiaryCodec.parse(markdown, dayKey: dayKey)
+        XCTAssertEqual(parsed.count, 2)
+        // 排序：小结在前
+        XCTAssertTrue(parsed[0].isDaySummary)
+        XCTAssertEqual(parsed[0].text, summary.text)
+        XCTAssertEqual(parsed[0].timeString, "23:59")
+        XCTAssertFalse(parsed[1].isDaySummary)
+        XCTAssertEqual(parsed[1].text, regular.text)
+    }
+
+    func testEscapeSummaryHeaderInText() {
+        // 正文里出现「## 当日小结」也要转义
+        let line = "## 当日小结"
+        XCTAssertEqual(MarkdownDiaryCodec.escapeTextLine(line), "\\## 当日小结")
+        let markdown = """
+        ## 10:00
+
+        \\## 当日小结
+        """
+        let parsed = MarkdownDiaryCodec.parse(markdown, dayKey: "2026-10-07")
+        XCTAssertEqual(parsed.count, 1)
+        XCTAssertFalse(parsed[0].isDaySummary)
+        XCTAssertEqual(parsed[0].text, "## 当日小结")
+    }
+
+    // MARK: - DiarySearch
+
+    private func makeDay(_ key: String, _ texts: [(String, String?)]) -> DiaryDay {
+        DiaryDay(key: key, entries: texts.enumerated().map { index, item in
+            DiaryEntry(
+                createdAt: makeDate(key, String(format: "%02d:00", 9 + index)),
+                text: item.0,
+                locationName: item.1
+            )
+        })
+    }
+
+    func testSearchFilter() {
+        let days = [
+            makeDay("2026-10-07", [("下午在公园散步", "静安公园"), ("晚上吃火锅", "海底捞")]),
+            makeDay("2026-10-06", [("在家看书", nil)]),
+        ]
+        // 空查询返回全部
+        XCTAssertEqual(DiarySearch.filter(days, query: "  ").count, 2)
+        // 按正文
+        let byText = DiarySearch.filter(days, query: "火锅")
+        XCTAssertEqual(byText.count, 1)
+        XCTAssertEqual(byText[0].entries.count, 1)
+        XCTAssertEqual(byText[0].entries[0].text, "晚上吃火锅")
+        // 按地点
+        let byLocation = DiarySearch.filter(days, query: "静安")
+        XCTAssertEqual(byLocation.count, 1)
+        XCTAssertEqual(byLocation[0].entries[0].locationName, "静安公园")
+        // 按日期键
+        let byDate = DiarySearch.filter(days, query: "10-06")
+        XCTAssertEqual(byDate.count, 1)
+        XCTAssertEqual(byDate[0].key, "2026-10-06")
+        // 无命中
+        XCTAssertTrue(DiarySearch.filter(days, query: "不存在的词").isEmpty)
+    }
+
     func testDayKeyHelpers() {
         let date = makeDate("2026-10-07", "23:59")
         XCTAssertEqual(DayKey.key(for: date), "2026-10-07")
