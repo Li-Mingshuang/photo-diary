@@ -15,6 +15,7 @@ final class PhotoDiaryUITests: XCTestCase {
     @MainActor
     func testFullFlowWithScreenshots() throws {
         let app = XCUIApplication()
+        app.launchArguments = ["-UITestResetData"]
         app.launch()
 
         // 1. 首页（空态或已有内容）
@@ -54,8 +55,9 @@ final class PhotoDiaryUITests: XCTestCase {
         save("04-add-entry-editing")
 
         // 7. 保存回首页，出现当天的日记卡片
+        // （注意不能用 cells.firstMatch：未配 Key 时列表首行是引导横幅）
         app.navigationBars["新日记"].buttons["保存"].tap()
-        let dayCell = app.cells.firstMatch
+        let dayCell = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "条记录")).firstMatch
         XCTAssertTrue(dayCell.waitForExistence(timeout: 5))
         save("05-home-with-diary")
 
@@ -68,9 +70,102 @@ final class PhotoDiaryUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "银杏叶")).firstMatch.waitForExistence(timeout: 3))
     }
 
+    /// 迭代二功能截图：首次引导、去设置入口、Key 横幅、搜索、当日小结按钮。
+    /// 通过 -UITestResetData 启动参数清空数据，与 testFullFlow 相互独立。
+    @MainActor
+    func testIteration2FeaturesWithScreenshots() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-UITestResetData"]
+        app.launch()
+
+        // 1. 全新安装空态：ContentUnavailableView 带「先设置 API Key」主按钮
+        XCTAssertTrue(app.navigationBars["光影日记"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["先设置 API Key"].waitForExistence(timeout: 3))
+        save("10-empty-onboarding")
+
+        // 2. 导入照片 → 新增页：无 Key 报错 + 「去设置 API Key」入口
+        let addMenu = app.buttons["addEntryMenu"]
+        XCTAssertTrue(addMenu.waitForExistence(timeout: 3))
+        addMenu.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        let importButton = app.buttons["从相册导入"]
+        XCTAssertTrue(importButton.waitForExistence(timeout: 3))
+        importButton.tap()
+        let firstPhoto = app.scrollViews.images.element(boundBy: 0)
+        XCTAssertTrue(firstPhoto.waitForExistence(timeout: 10))
+        firstPhoto.tap()
+
+        XCTAssertTrue(app.navigationBars["新日记"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["去设置 API Key"].waitForExistence(timeout: 5))
+        save("11-add-entry-nokey")
+
+        // 3. 写正文保存 → 首页：顶部常驻「未设置 Key」引导横幅
+        let editor = app.textViews["diaryTextEditor"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 3))
+        editor.tap()
+        editor.typeText("傍晚去江边看了日落，风很舒服。")
+        app.navigationBars["新日记"].buttons["保存"].tap()
+        let dayCell = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "条记录")).firstMatch
+        XCTAssertTrue(dayCell.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "还没有设置 API Key")).firstMatch.exists)
+        save("12-home-banner")
+
+        // 4. 搜索：无命中 → ContentUnavailableView.search
+        app.swipeDown() // 下拉露出搜索框
+        let searchField = app.searchFields.firstMatch
+        XCTAssertTrue(searchField.waitForExistence(timeout: 5))
+        searchField.tap()
+        searchField.typeText("火锅")
+        sleep(1)
+        // 无命中：日记行消失（无结果空态文案随系统语言变化，不硬断言文案）
+        XCTAssertFalse(app.cells.containing(NSPredicate(format: "label CONTAINS %@", "条记录")).firstMatch.exists)
+        save("13-search-empty")
+
+        // 5. 搜索：清空后搜命中词 → 只显示命中的天
+        searchField.tap()
+        app.buttons["Clear text"].firstMatch.tapIfExists()
+        app.buttons["清除文本"].firstMatch.tapIfExists()
+        if let value = searchField.value as? String, value.contains("火锅") {
+            searchField.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: value.count))
+        }
+        searchField.typeText("日落")
+        sleep(1)
+        XCTAssertTrue(app.cells.containing(NSPredicate(format: "label CONTAINS %@", "日落")).firstMatch.waitForExistence(timeout: 3))
+        save("14-search-result")
+        app.buttons["Cancel"].firstMatch.tapIfExists()
+        app.buttons["取消"].firstMatch.tapIfExists()
+
+        // 6. 日记详情：工具栏有「当日小结」与分享按钮
+        let cell2 = app.cells.containing(NSPredicate(format: "label CONTAINS %@", "条记录")).firstMatch
+        XCTAssertTrue(cell2.waitForExistence(timeout: 5))
+        cell2.tap()
+        sleep(1)
+        XCTAssertTrue(app.buttons["daySummaryButton"].waitForExistence(timeout: 3))
+        save("15-day-detail-toolbar")
+
+        // 7. 点「当日小结」：无 Key → 弹窗提示
+        app.buttons["daySummaryButton"].tap()
+        XCTAssertTrue(app.alerts["操作失败"].waitForExistence(timeout: 3))
+        save("16-summary-nokey-alert")
+        app.alerts["操作失败"].buttons["好的"].tap()
+
+        // 8. 条目菜单：编辑 / 重新生成 / 删除
+        let entryMenu = app.buttons["entryMenuButton"].firstMatch
+        XCTAssertTrue(entryMenu.waitForExistence(timeout: 3))
+        entryMenu.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        sleep(1)
+        XCTAssertTrue(app.buttons["重新生成"].waitForExistence(timeout: 3))
+        save("17-entry-menu")
+    }
+
     private func save(_ name: String) {
         let screenshot = XCUIScreen.main.screenshot()
         let url = URL(fileURLWithPath: "\(shotDir)/\(name).png")
         try? screenshot.pngRepresentation.write(to: url)
+    }
+}
+
+private extension XCUIElement {
+    func tapIfExists() {
+        if exists { tap() }
     }
 }

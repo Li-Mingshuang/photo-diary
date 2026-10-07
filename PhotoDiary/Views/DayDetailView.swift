@@ -226,6 +226,7 @@ private struct EntryCardView: View {
                     Image(systemName: "ellipsis.circle")
                         .foregroundStyle(.secondary)
                 }
+                .accessibilityIdentifier("entryMenuButton")
             }
 
             // ImageIO 降采样加载，避免全尺寸图片占内存

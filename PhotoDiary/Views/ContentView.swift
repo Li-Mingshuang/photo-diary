@@ -89,7 +89,9 @@ struct ContentView: View {
 
     @ViewBuilder
     private var content: some View {
-        if store.days.isEmpty {
+        // Group 承载 searchable：搜索无结果切到空态视图时搜索框不消失
+        Group {
+            if store.days.isEmpty {
             ContentUnavailableView {
                 Label("还没有日记", systemImage: "camera.on.rectangle")
             } description: {
@@ -129,8 +131,10 @@ struct ContentView: View {
                 }
             }
             .listStyle(.plain)
-            .searchable(text: $searchText, prompt: "搜索正文、地点、日期")
+            }
         }
+        // 挂在整个内容区而非 List 上：搜索无结果切到空态视图时搜索框不消失
+        .searchable(text: $searchText, prompt: "搜索正文、地点、日期")
     }
 
     // MARK: - 拍照 / 导入
