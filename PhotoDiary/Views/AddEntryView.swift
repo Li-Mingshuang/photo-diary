@@ -8,6 +8,8 @@ struct AddEntryView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var text = ""
+    @State private var title = ""
+    @State private var tags: [String] = []
     @State private var isGenerating = false
     @State private var errorMessage: String?
     @State private var didAutoGenerate = false
@@ -33,6 +35,27 @@ struct AddEntryView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.vertical, 8)
+                    }
+
+                    // AI 生成的标题（可编辑）与标签
+                    if !title.isEmpty || !tags.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            if !title.isEmpty {
+                                TextField("标题", text: $title)
+                                    .font(.headline)
+                                    .padding(10)
+                                    .background(Color(.secondarySystemBackground))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .disabled(isGenerating)
+                            }
+                            if !tags.isEmpty {
+                                HStack(spacing: 6) {
+                                    ForEach(tags, id: \.self) { tag in
+                                        TagCapsule(tag: tag)
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     VStack(alignment: .leading, spacing: 6) {
@@ -143,9 +166,13 @@ struct AddEntryView: View {
                 apiKey: config.apiKey()
             ) {
                 accumulated += delta
-                text = accumulated
+                // 流式阶段：从部分 JSON 里提取已生成的正文用于展示
+                text = DiaryGenerationParser.displayText(forPartial: accumulated)
             }
-            text = accumulated.trimmingCharacters(in: .whitespacesAndNewlines)
+            let parsed = DiaryGenerationParser.parse(accumulated)
+            text = parsed.text
+            title = parsed.title ?? ""
+            tags = parsed.tags
         } catch {
             if Task.isCancelled { return } // 用户主动停止，保留已生成部分
             errorMessage = error.localizedDescription
@@ -153,12 +180,15 @@ struct AddEntryView: View {
     }
 
     private func save() {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let entry = DiaryEntry(
             createdAt: draft.takenAt,
             text: text.trimmingCharacters(in: .whitespacesAndNewlines),
             locationName: draft.locationName,
             latitude: draft.location?.coordinate.latitude,
-            longitude: draft.location?.coordinate.longitude
+            longitude: draft.location?.coordinate.longitude,
+            title: trimmedTitle.isEmpty ? nil : trimmedTitle,
+            tags: tags
         )
         do {
             try store.addEntry(entry, image: draft.image)
@@ -166,5 +196,19 @@ struct AddEntryView: View {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+}
+
+/// 标签胶囊（#tag 样式）
+struct TagCapsule: View {
+    let tag: String
+
+    var body: some View {
+        Text("#\(tag)")
+            .font(.caption)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 3)
+            .background(Color.accentColor.opacity(0.12), in: Capsule())
+            .foregroundStyle(Color.accentColor)
     }
 }

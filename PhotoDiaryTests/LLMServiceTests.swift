@@ -202,6 +202,67 @@ final class LLMServiceTests: XCTestCase {
         XCTAssertEqual(prompt, "地点：未知")
     }
 
+    // MARK: - DiaryGenerationParser
+
+    func testGenerationParserFullJSON() {
+        let raw = #"{"title": "银杏叶黄了", "text": "下午路过静安公园，阳光把银杏叶照得透亮。", "tags": ["公园", "秋天", "散步"]}"#
+        let parsed = DiaryGenerationParser.parse(raw)
+        XCTAssertEqual(parsed.title, "银杏叶黄了")
+        XCTAssertEqual(parsed.text, "下午路过静安公园，阳光把银杏叶照得透亮。")
+        XCTAssertEqual(parsed.tags, ["公园", "秋天", "散步"])
+    }
+
+    func testGenerationParserStripsCodeFence() {
+        let raw = "```json\n{\"title\": \"日落\", \"text\": \"傍晚的江边。\", \"tags\": [\"日落\"]}\n```"
+        let parsed = DiaryGenerationParser.parse(raw)
+        XCTAssertEqual(parsed.title, "日落")
+        XCTAssertEqual(parsed.text, "傍晚的江边。")
+        XCTAssertEqual(parsed.tags, ["日落"])
+    }
+
+    func testGenerationParserFallbackToPlainText() {
+        // 老模板/模型跑偏输出纯文本时，整体作为正文，标题标签为空
+        let raw = "今天下午在公园散步，阳光很好。"
+        let parsed = DiaryGenerationParser.parse(raw)
+        XCTAssertNil(parsed.title)
+        XCTAssertEqual(parsed.text, raw)
+        XCTAssertTrue(parsed.tags.isEmpty)
+    }
+
+    func testGenerationParserHandlesHashPrefixAndEmptyTags() {
+        let raw = ##"{"title": "", "text": "正文", "tags": ["#咖啡", " ", "周末"]}"##
+        let parsed = DiaryGenerationParser.parse(raw)
+        XCTAssertNil(parsed.title) // 空标题视为无
+        XCTAssertEqual(parsed.tags, ["咖啡", "周末"])
+    }
+
+    func testGenerationParserDisplayTextPartial() {
+        // text 还没出现
+        XCTAssertEqual(DiaryGenerationParser.displayText(forPartial: #"{"tit"#), "")
+        // text 正在输出
+        XCTAssertEqual(
+            DiaryGenerationParser.displayText(forPartial: #"{"title": "银杏", "text": "下午路过"#),
+            "下午路过"
+        )
+        // text 已闭合
+        XCTAssertEqual(
+            DiaryGenerationParser.displayText(forPartial: #"{"title": "银杏", "text": "下午路过", "tags": ["#),
+            "下午路过"
+        )
+        // 转义字符
+        XCTAssertEqual(
+            DiaryGenerationParser.displayText(forPartial: #"{"text": "第一行\n第二行"#),
+            "第一行\n第二行"
+        )
+        // 末尾不完整转义被丢弃
+        XCTAssertEqual(
+            DiaryGenerationParser.displayText(forPartial: #"{"text": "abc\"#),
+            "abc"
+        )
+        // 纯文本（非 JSON）流式阶段不展示
+        XCTAssertEqual(DiaryGenerationParser.displayText(forPartial: "今天下午"), "")
+    }
+
     // MARK: - 预设
 
     func testDefaultPresetIsDeepSeekFlashWithVision() {

@@ -109,10 +109,13 @@ struct DayDetailView: View {
                 apiKey: config.apiKey()
             ) {
                 accumulated += delta
-                updated.text = accumulated
+                updated.text = DiaryGenerationParser.displayText(forPartial: accumulated)
                 store.updateEntry(updated) // 边生成边刷新界面
             }
-            updated.text = accumulated.trimmingCharacters(in: .whitespacesAndNewlines)
+            let parsed = DiaryGenerationParser.parse(accumulated)
+            updated.text = parsed.text
+            updated.title = parsed.title
+            updated.tags = parsed.tags
             store.updateEntry(updated)
         } catch {
             if Task.isCancelled { return } // 用户主动停止，保留已生成部分
@@ -229,6 +232,12 @@ private struct EntryCardView: View {
                 .accessibilityIdentifier("entryMenuButton")
             }
 
+            // AI 生成的标题
+            if let title = entry.title, !title.isEmpty {
+                Text(title)
+                    .font(.headline)
+            }
+
             // ImageIO 降采样加载，避免全尺寸图片占内存
             if let imageURL, let image = Thumbnailer.image(at: imageURL, maxPixelSize: 1400) {
                 Image(uiImage: image)
@@ -249,6 +258,15 @@ private struct EntryCardView: View {
                 Text(Self.markdown(entry.text))
                     .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
+            // AI 生成的标签
+            if !entry.tags.isEmpty {
+                HStack(spacing: 6) {
+                    ForEach(entry.tags, id: \.self) { tag in
+                        TagCapsule(tag: tag)
+                    }
+                }
             }
         }
         .padding()

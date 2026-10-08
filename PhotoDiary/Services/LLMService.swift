@@ -213,3 +213,114 @@ struct LLMService {
         return error["message"] as? String
     }
 }
+
+/// AI 生成结果的结构化解析：默认 Prompt 要求模型输出
+/// {"title": "...", "text": "...", "tags": ["..."]}，
+/// 解析失败时整体降级为纯正文（兼容老模板与自定义模板）。
+enum DiaryGenerationParser {
+
+    struct Parsed: Equatable {
+        var title: String?
+        var text: String
+        var tags: [String]
+    }
+
+    /// 流式过程中的展示文本：从部分 JSON 里增量提取 text 字段的已完成部分。
+    /// text 字段还没出现时返回空串（调用方显示「生成中」占位）。
+    static func displayText(forPartial raw: String) -> String {
+        let cleaned = stripCodeFence(raw)
+        guard let keyRange = cleaned.range(of: "\"text\"") else { return "" }
+        let afterKey = cleaned[keyRange.upperBound...]
+        guard let quoteIndex = afterKey.firstIndex(of: "\"") else { return "" }
+        let content = afterKey[afterKey.index(after: quoteIndex)...]
+
+        // 找未转义的闭合引号；找不到说明 text 还在流式输出中，取现有全部
+        var end: String.Index?
+        var i = content.startIndex
+        while i < content.endIndex {
+            if content[i] == "\\" {
+                i = content.index(i, offsetBy: 2, limitedBy: content.endIndex) ?? content.endIndex
+                continue
+            }
+            if content[i] == "\"" {
+                end = i
+                break
+            }
+            i = content.index(after: i)
+        }
+        let slice = end.map { content[..<$0] } ?? content[...]
+        return unescapeJSONString(String(slice))
+    }
+
+    /// 生成完成后的最终解析。JSON 解析失败或 text 为空时整体降级为纯正文。
+    static func parse(_ raw: String) -> Parsed {
+        let cleaned = stripCodeFence(raw).trimmingCharacters(in: .whitespacesAndNewlines)
+        if let data = cleaned.data(using: .utf8),
+           let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            let text = ((obj["text"] as? String) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            if !text.isEmpty {
+                let rawTitle = (obj["title"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
+                let title = (rawTitle?.isEmpty == false) ? rawTitle : nil
+                let tags = ((obj["tags"] as? [Any]) ?? [])
+                    .compactMap { ($0 as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .map { $0.hasPrefix("#") ? String($0.dropFirst()) : $0 }
+                    .filter { !$0.isEmpty }
+                return Parsed(title: title, text: text, tags: Array(tags.prefix(6)))
+            }
+        }
+        // 降级：模型没按格式输出（老模板/自定义模板/模型跑偏）
+        return Parsed(title: nil, text: cleaned, tags: [])
+    }
+
+    /// 去掉模型可能加上的 ```json 代码块围栏
+    static func stripCodeFence(_ raw: String) -> String {
+        var s = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        if s.hasPrefix("```") {
+            if let newline = s.firstIndex(of: "\n") {
+                s = String(s[s.index(after: newline)...])
+            }
+        }
+        if s.hasSuffix("```") {
+            s = String(s.dropLast(3))
+        }
+        return s.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// 反转义 JSON 字符串片段；末尾不完整的转义序列直接丢弃（流式场景）
+    static func unescapeJSONString(_ s: String) -> String {
+        var result = ""
+        var i = s.startIndex
+        while i < s.endIndex {
+            let c = s[i]
+            guard c == "\\" else {
+                result.append(c)
+                i = s.index(after: i)
+                continue
+            }
+            let next = s.index(after: i)
+            guard next < s.endIndex else { break } // 末尾孤立的反斜杠
+            let e = s[next]
+            switch e {
+            case "n": result.append("\n")
+            case "t": result.append("\t")
+            case "r": result.append("\r")
+            case "\"": result.append("\"")
+            case "\\": result.append("\\")
+            case "/": result.append("/")
+            case "u":
+                let hexStart = s.index(after: next)
+                guard hexStart < s.endIndex,
+                      let hexEnd = s.index(hexStart, offsetBy: 4, limitedBy: s.endIndex),
+                      let scalar = UInt32(s[hexStart..<hexEnd], radix: 16),
+                      let uni = Unicode.Scalar(scalar) else { return result }
+                result.append(Character(uni))
+                i = hexEnd
+                continue
+            default:
+                result.append(e)
+            }
+            i = s.index(after: next)
+        }
+        return result
+    }
+}

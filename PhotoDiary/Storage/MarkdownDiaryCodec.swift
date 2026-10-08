@@ -63,6 +63,16 @@ enum MarkdownDiaryCodec {
                 block.append("![照片](images/\(imageName))")
                 block.append("")
             }
+            // AI 生成的标题/标签标记行（老条目没有则不输出）
+            if let title = entry.title, !title.isEmpty {
+                block.append("title: \(title)")
+            }
+            if !entry.tags.isEmpty {
+                block.append("tags: " + entry.tags.map { "#\($0)" }.joined(separator: " "))
+            }
+            if (entry.title?.isEmpty == false) || !entry.tags.isEmpty {
+                block.append("")
+            }
             let text = entry.text.trimmingCharacters(in: .whitespacesAndNewlines)
             if !text.isEmpty {
                 let escaped = text
@@ -155,7 +165,8 @@ enum MarkdownDiaryCodec {
             // 转义行：还原为普通正文
             if line.hasPrefix("\\") {
                 let unescaped = String(line.dropFirst())
-                if unescaped == "---" || unescaped == summaryHeader || parseEntryHeader(unescaped) != nil || parseImageLine(unescaped) != nil {
+                if unescaped == "---" || unescaped == summaryHeader || isMarkerLine(unescaped)
+                    || parseEntryHeader(unescaped) != nil || parseImageLine(unescaped) != nil {
                     textLines.append(unescaped)
                     continue
                 }
@@ -163,6 +174,21 @@ enum MarkdownDiaryCodec {
 
             if let imageName = parseImageLine(line) {
                 current?.imageFileName = imageName
+                continue
+            }
+
+            // 标题/标签标记行：仅在正文（非空行）开始前识别，避免误吞用户文本
+            let noTextYet = textLines.allSatisfy { $0.trimmingCharacters(in: .whitespaces).isEmpty }
+            if noTextYet, line.hasPrefix("title: ") {
+                let value = String(line.dropFirst(7)).trimmingCharacters(in: .whitespaces)
+                if !value.isEmpty { current?.title = value }
+                continue
+            }
+            if noTextYet, line.hasPrefix("tags: ") {
+                let value = String(line.dropFirst(6))
+                current?.tags = value.split(separator: " ")
+                    .map { $0.hasPrefix("#") ? String($0.dropFirst()) : String($0) }
+                    .filter { !$0.isEmpty }
                 continue
             }
 
@@ -188,10 +214,16 @@ enum MarkdownDiaryCodec {
         return isoFormatter.date(from: String(inner))
     }
 
-    /// 正文行若与日记语法冲突（分隔线/条目标题/小结标题/图片行），加反斜杠转义
+    /// 是否为 title:/tags: 标记行
+    static func isMarkerLine(_ line: String) -> Bool {
+        line.hasPrefix("title: ") || line.hasPrefix("tags: ")
+    }
+
+    /// 正文行若与日记语法冲突（分隔线/条目标题/小结标题/图片行/标记行），加反斜杠转义
     static func escapeTextLine(_ line: String) -> String {
         let trimmed = line.trimmingCharacters(in: .whitespaces)
-        if trimmed == "---" || trimmed == summaryHeader || parseEntryHeader(trimmed) != nil || parseImageLine(trimmed) != nil {
+        if trimmed == "---" || trimmed == summaryHeader || isMarkerLine(trimmed)
+            || parseEntryHeader(trimmed) != nil || parseImageLine(trimmed) != nil {
             return "\\" + line
         }
         return line

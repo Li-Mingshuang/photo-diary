@@ -231,6 +231,55 @@ final class MarkdownDiaryCodecTests: XCTestCase {
         XCTAssertTrue(DiarySearch.filter(days, query: "不存在的词").isEmpty)
     }
 
+    func testTitleAndTagsRoundTrip() {
+        let dayKey = "2026-10-07"
+        let entry = DiaryEntry(
+            createdAt: makeDate(dayKey, "14:30"),
+            text: "下午在公园散步。",
+            imageFileName: "IMG_1.jpg",
+            locationName: "公园",
+            title: "银杏叶黄了",
+            tags: ["公园", "秋天"]
+        )
+        let markdown = MarkdownDiaryCodec.render(dayKey: dayKey, entries: [entry])
+        XCTAssertTrue(markdown.contains("title: 银杏叶黄了"))
+        XCTAssertTrue(markdown.contains("tags: #公园 #秋天"))
+
+        let parsed = MarkdownDiaryCodec.parse(markdown, dayKey: dayKey)
+        XCTAssertEqual(parsed.count, 1)
+        XCTAssertEqual(parsed[0].title, "银杏叶黄了")
+        XCTAssertEqual(parsed[0].tags, ["公园", "秋天"])
+        XCTAssertEqual(parsed[0].text, "下午在公园散步。")
+    }
+
+    func testMarkerLinesEscapedInText() {
+        // 正文里出现 title:/tags: 开头的行要转义还原
+        let dayKey = "2026-10-07"
+        let tricky = "title: 这是正文不是标题\ntags: 同上"
+        let entry = DiaryEntry(createdAt: makeDate(dayKey, "10:00"), text: tricky)
+        let markdown = MarkdownDiaryCodec.render(dayKey: dayKey, entries: [entry])
+        XCTAssertTrue(markdown.contains("\\title: 这是正文不是标题"))
+        let parsed = MarkdownDiaryCodec.parse(markdown, dayKey: dayKey)
+        XCTAssertEqual(parsed.count, 1)
+        XCTAssertNil(parsed[0].title)
+        XCTAssertTrue(parsed[0].tags.isEmpty)
+        XCTAssertEqual(parsed[0].text, tricky)
+    }
+
+    func testSearchMatchesTitleAndTags() {
+        let entry = DiaryEntry(
+            createdAt: makeDate("2026-10-07", "09:00"),
+            text: "今天天气不错",
+            title: "银杏叶黄了",
+            tags: ["公园", "秋天"]
+        )
+        let days = [DiaryDay(key: "2026-10-07", entries: [entry])]
+        XCTAssertEqual(DiarySearch.filter(days, query: "银杏").count, 1)   // 按标题
+        XCTAssertEqual(DiarySearch.filter(days, query: "秋天").count, 1)   // 按标签
+        XCTAssertEqual(DiarySearch.filter(days, query: "#公园").count, 1)  // 带 # 前缀搜标签
+        XCTAssertTrue(DiarySearch.filter(days, query: "不相关").isEmpty)
+    }
+
     func testDayKeyHelpers() {
         let date = makeDate("2026-10-07", "23:59")
         XCTAssertEqual(DayKey.key(for: date), "2026-10-07")

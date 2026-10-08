@@ -40,6 +40,10 @@ struct DiaryEntry: Identifiable, Equatable {
     var longitude: Double?
     /// 是否为「当日小结」（由当天多张照片合并生成，渲染在日记文件顶部）
     var isDaySummary: Bool = false
+    /// AI 生成的简短标题（可选，老数据没有）
+    var title: String? = nil
+    /// AI 生成的标签（不含 # 前缀）
+    var tags: [String] = []
 
     var timeString: String {
         let f = DateFormatter()
@@ -55,8 +59,11 @@ struct DiaryDay: Identifiable, Equatable {
     var id: String { key }
     var title: String { DayKey.title(for: key) }
 
+    /// 列表行摘要：优先标题，其次正文首行
     var summary: String {
-        entries.first?.text.components(separatedBy: .newlines).first ?? ""
+        guard let first = entries.first else { return "" }
+        if let title = first.title, !title.isEmpty { return title }
+        return first.text.components(separatedBy: .newlines).first ?? ""
     }
 }
 
@@ -67,13 +74,17 @@ enum DiarySearch {
     static func filter(_ days: [DiaryDay], query: String) -> [DiaryDay] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !q.isEmpty else { return days }
+        // 带 # 前缀的查询同时按裸词匹配标签
+        let tagQuery = q.hasPrefix("#") ? String(q.dropFirst()) : q
         return days.compactMap { day in
             if day.title.localizedCaseInsensitiveContains(q) || day.key.contains(q) {
                 return day
             }
-            let matched = day.entries.filter {
-                $0.text.localizedCaseInsensitiveContains(q)
-                    || ($0.locationName?.localizedCaseInsensitiveContains(q) ?? false)
+            let matched = day.entries.filter { entry in
+                entry.text.localizedCaseInsensitiveContains(q)
+                    || (entry.locationName?.localizedCaseInsensitiveContains(q) ?? false)
+                    || (entry.title?.localizedCaseInsensitiveContains(q) ?? false)
+                    || entry.tags.contains { $0.localizedCaseInsensitiveContains(tagQuery) }
             }
             return matched.isEmpty ? nil : DiaryDay(key: day.key, entries: matched)
         }
