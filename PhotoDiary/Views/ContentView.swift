@@ -6,6 +6,7 @@ struct ContentView: View {
     @StateObject private var store = DiaryStore()
     @StateObject private var llmConfig = LLMConfigStore()
     @StateObject private var locationService = LocationService()
+    @StateObject private var profileStore = UserProfileStore()
 
     @State private var showingSettings = false
     @State private var showingCamera = false
@@ -59,7 +60,7 @@ struct ContentView: View {
                     }
                 }
                 .sheet(isPresented: $showingSettings) {
-                    SettingsView(config: llmConfig)
+                    SettingsView(config: llmConfig, profileStore: profileStore, diaryStore: store)
                 }
                 .photosPicker(isPresented: $showingPhotosPicker, selection: $photosPickerItem, matching: .images)
                 .fullScreenCover(isPresented: $showingCamera) {
@@ -69,7 +70,7 @@ struct ContentView: View {
                     .ignoresSafeArea()
                 }
                 .sheet(item: $draft) { draft in
-                    AddEntryView(draft: draft, store: store, config: llmConfig)
+                    AddEntryView(draft: draft, store: store, config: llmConfig, profileStore: profileStore)
                 }
                 .onChange(of: photosPickerItem) { _, item in
                     Task { await importPhoto(item) }
@@ -124,7 +125,7 @@ struct ContentView: View {
                 }
                 ForEach(displayedDays) { day in
                     NavigationLink {
-                        DayDetailView(dayKey: day.key, store: store, config: llmConfig)
+                        DayDetailView(dayKey: day.key, store: store, config: llmConfig, profileStore: profileStore)
                     } label: {
                         DayRowView(day: day, store: store)
                     }

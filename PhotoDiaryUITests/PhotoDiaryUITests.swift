@@ -40,7 +40,10 @@ final class PhotoDiaryUITests: XCTestCase {
         // 4. 系统照片选择器：选第一张（最新的一张）照片
         let firstPhoto = app.scrollViews.images.element(boundBy: 0)
         XCTAssertTrue(firstPhoto.waitForExistence(timeout: 10))
-        firstPhoto.tap()
+        // 冷启动的 picker 网格还在加载时 AX 滚动会失败（kAXErrorCannotComplete），
+        // 等网格稳定后用坐标点击（与工具栏 Menu 同款解法）
+        sleep(2)
+        firstPhoto.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
 
         // 5. 新增页：未配置 API Key 时的降级提示（AI 生成自动触发后立刻报错兜底）
         XCTAssertTrue(app.navigationBars["新日记"].waitForExistence(timeout: 5))
@@ -92,7 +95,10 @@ final class PhotoDiaryUITests: XCTestCase {
         importButton.tap()
         let firstPhoto = app.scrollViews.images.element(boundBy: 0)
         XCTAssertTrue(firstPhoto.waitForExistence(timeout: 10))
-        firstPhoto.tap()
+        // 冷启动的 picker 网格还在加载时 AX 滚动会失败（kAXErrorCannotComplete），
+        // 等网格稳定后用坐标点击（与工具栏 Menu 同款解法）
+        sleep(2)
+        firstPhoto.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
 
         XCTAssertTrue(app.navigationBars["新日记"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["去设置 API Key"].waitForExistence(timeout: 5))

@@ -5,6 +5,7 @@ struct AddEntryView: View {
     let draft: EntryDraft
     @ObservedObject var store: DiaryStore
     @ObservedObject var config: LLMConfigStore
+    @ObservedObject var profileStore: UserProfileStore
     @Environment(\.dismiss) private var dismiss
 
     @State private var text = ""
@@ -123,7 +124,7 @@ struct AddEntryView: View {
                 startGeneration()
             }
             .sheet(isPresented: $showingSettings) {
-                SettingsView(config: config)
+                SettingsView(config: config, profileStore: profileStore, diaryStore: store)
             }
         }
     }
@@ -154,7 +155,8 @@ struct AddEntryView: View {
             let prompt = PromptBuilder.buildPrompt(
                 template: config.promptTemplate,
                 date: draft.takenAt,
-                locationName: draft.locationName
+                locationName: draft.locationName,
+                persona: profileStore.profile.personaText
             )
             let imageData = draft.image.downscaledTo(maxDimension: 1280).jpegData(compressionQuality: 0.7)
             // 流式生成：逐段填充，用户可以看着日记写出来
@@ -192,6 +194,9 @@ struct AddEntryView: View {
         )
         do {
             try store.addEntry(entry, image: draft.image)
+            // 新日记是一条画像信号；满阈值后台自动提炼
+            profileStore.noteNewEntry()
+            UserProfileStore.maybeAutoDistill(profileStore: profileStore, config: config, days: store.days)
             dismiss()
         } catch {
             errorMessage = error.localizedDescription

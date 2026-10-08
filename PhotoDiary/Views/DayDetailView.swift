@@ -5,6 +5,7 @@ struct DayDetailView: View {
     let dayKey: String
     @ObservedObject var store: DiaryStore
     @ObservedObject var config: LLMConfigStore
+    @ObservedObject var profileStore: UserProfileStore
 
     @State private var editingEntry: DiaryEntry?
     @State private var regeneratingEntryID: UUID?
@@ -67,7 +68,10 @@ struct DayDetailView: View {
         }
         .sheet(item: $editingEntry) { entry in
             EditEntryView(entry: entry) { updated in
+                // 记录「原文 → 改后」对照，作为画像提炼最有价值的信号
+                profileStore.recordEdit(original: entry.text, modified: updated.text)
                 store.updateEntry(updated)
+                UserProfileStore.maybeAutoDistill(profileStore: profileStore, config: config, days: store.days)
             }
         }
         .alert("操作失败", isPresented: .constant(actionError != nil)) {
@@ -98,7 +102,8 @@ struct DayDetailView: View {
             let prompt = PromptBuilder.buildPrompt(
                 template: config.promptTemplate,
                 date: entry.createdAt,
-                locationName: entry.locationName
+                locationName: entry.locationName,
+                persona: profileStore.profile.personaText
             )
             var updated = entry
             var accumulated = ""
@@ -148,7 +153,11 @@ struct DayDetailView: View {
                   let image = Thumbnailer.image(at: store.imageURL(for: fileName), maxPixelSize: 1024) else { return nil }
             return image.jpegData(compressionQuality: 0.6)
         }
-        let prompt = PromptBuilder.buildDaySummaryPrompt(template: DefaultPrompt.daySummaryTemplate, entries: photoEntries)
+        let prompt = PromptBuilder.buildDaySummaryPrompt(
+            template: DefaultPrompt.daySummaryTemplate,
+            entries: photoEntries,
+            persona: profileStore.profile.personaText
+        )
         var accumulated = ""
         do {
             for try await delta in LLMService().chatStreamMulti(

@@ -1,0 +1,605 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test -project PhotoDiary.xcodeproj -scheme PhotoDiary -destination "platform=iOS Simulator,id=FF9920D0-FDD2-4968-9002-B939C0FC7492"
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:FF9920D0-FDD2-4968-9002-B939C0FC7492, OS:18.5, name:iPhone 16 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:FF9920D0-FDD2-4968-9002-B939C0FC7492, OS:18.5, name:iPhone 16 Pro }
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (3 targets)
+    Target 'PhotoDiaryUITests' in project 'PhotoDiary'
+        ➜ Explicit dependency on target 'PhotoDiary' in project 'PhotoDiary'
+    Target 'PhotoDiaryTests' in project 'PhotoDiary'
+        ➜ Explicit dependency on target 'PhotoDiary' in project 'PhotoDiary'
+    Target 'PhotoDiary' in project 'PhotoDiary' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/limingshuang/Documents/codes/github/project_lib/photo-diary/PhotoDiary/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: c0c3d8a75d7c39b225d18f868e09aa84
+Build description path: /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/XCBuildData/c0c3d8a75d7c39b225d18f868e09aa84.xcbuilddata
+ProcessProductPackaging "" /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.photodiary.app";
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent
+
+ProcessProductPackagingDER /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent.der (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /usr/bin/derq query -f xml -i /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent.der --raw
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk /Users/limingshuang/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary/PhotoDiary.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/SDKStatCaches.noindex/iphonesimulator18.5-22F76-d5fc8ad4295d2ef488fb7d0f804ce0c4.sdkstatcache
+Base directory status changed. Regenerating...
+
+ProcessProductPackaging "" /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.photodiary.app.uitests.xctrunner";
+    "keychain-access-groups" =     (
+        "FAKETEAMID.com.photodiary.app.uitests.xctrunner"
+    );
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent
+
+ProcessProductPackagingDER /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent.der (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /usr/bin/derq query -f xml -i /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent.der --raw
+
+Ld /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib normal (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -filelist /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary.LinkFileList -install_name @rpath/PhotoDiary.debug.dylib -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -Xlinker -no_adhoc_codesign -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib
+
+ProcessInfoPlistFile /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/Info.plist /Users/limingshuang/Documents/codes/github/project_lib/photo-diary/PhotoDiary/Info.plist (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-infoPlistUtility /Users/limingshuang/Documents/codes/github/project_lib/photo-diary/PhotoDiary/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/assetcatalog_generated_info.plist -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/Info.plist
+
+ConstructStubExecutorLinkFileList /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary-ExecutorLinkFileList-normal-arm64.txt (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    construct-stub-executor-link-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'PhotoDiary' from project 'PhotoDiary')
+
+Ld /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary normal (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.app-Simulated.xcent.der /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary
+
+CopySwiftLibs /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/Frameworks --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/SystemExtensions --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name PhotoDiary --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.photodiary.app --output /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary --dependency-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary_dependency_info.dat --stringsdata-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary.SwiftFileList --metadata-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.DependencyMetadataFileList --static-metadata-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/PhotoDiary.DependencyStaticMetadataFileList --swift-const-vals-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiary.build/Objects-normal/arm64/PhotoDiary.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-08 20:39:06.911 appintentsmetadataprocessor[23840:61380] Starting appintentsmetadataprocessor export
+2026-10-08 20:39:06.913 appintentsmetadataprocessor[23840:61380] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+ProcessInfoPlistFile /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/Info.plist /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/empty-PhotoDiaryTests.plist (in target 'PhotoDiaryTests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-infoPlistUtility /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/empty-PhotoDiaryTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/Info.plist
+
+Ld /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/PhotoDiaryTests normal (in target 'PhotoDiaryTests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -filelist /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -bundle_loader /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary -Xlinker -object_path_lto -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests.swiftmodule -framework XCTest -lXCTestSwiftSupport /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/PhotoDiaryTests
+
+CopySwiftLibs /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest (in target 'PhotoDiaryTests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/PhotoDiaryTests --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/Frameworks --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/PlugIns --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/SystemExtensions --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'PhotoDiaryTests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name PhotoDiaryTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.photodiary.app.tests --output /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest/PhotoDiaryTests --dependency-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests_dependency_info.dat --stringsdata-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests.SwiftFileList --metadata-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/PhotoDiaryTests.DependencyMetadataFileList --static-metadata-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/PhotoDiaryTests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryTests.build/Objects-normal/arm64/PhotoDiaryTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-08 20:39:07.280 appintentsmetadataprocessor[23854:61433] Starting appintentsmetadataprocessor export
+2026-10-08 20:39:07.285 appintentsmetadataprocessor[23854:61433] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+CodeSign /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest (in target 'PhotoDiaryTests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PlugIns/PhotoDiaryTests.xctest
+
+CodeSign /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/PhotoDiary.debug.dylib
+
+CodeSign /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/__preview.dylib (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/__preview.dylib
+/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app/__preview.dylib: replacing existing signature
+
+CodeSign /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app
+
+Validate /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app (in target 'PhotoDiary' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-validationUtility /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiary.app -infoplist-subpath Info.plist
+
+Ld /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/PhotoDiaryUITests normal (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk -O0 -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk/Developer/Library/Frameworks -filelist /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -dead_strip -Xlinker -object_path_lto -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests.swiftmodule -framework XCTest -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/PhotoDiaryUITests
+
+ExtractAppIntentsMetadata (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name PhotoDiaryUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator18.5.sdk --xcode-version 16F6 --platform-family iOS --deployment-target 17.0 --bundle-identifier com.photodiary.app.uitests --output /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest --target-triple arm64-apple-ios17.0-simulator --binary-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/PhotoDiaryUITests --dependency-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests_dependency_info.dat --stringsdata-file /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests.SwiftFileList --metadata-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.DependencyMetadataFileList --static-metadata-file-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/PhotoDiaryUITests.DependencyStaticMetadataFileList --swift-const-vals-list /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/Objects-normal/arm64/PhotoDiaryUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-08 20:39:07.820 appintentsmetadataprocessor[23876:61528] Starting appintentsmetadataprocessor export
+2026-10-08 20:39:07.822 appintentsmetadataprocessor[23876:61528] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+ProcessInfoPlistFile /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/Info.plist /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/empty-PhotoDiaryUITests.plist (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-infoPlistUtility /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/empty-PhotoDiaryUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/ProductTypeInfoPlistAdditions.plist -o /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/Info.plist
+
+CopySwiftLibs /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/PhotoDiaryUITests --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/Frameworks --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/PlugIns --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/SystemExtensions --scan-folder /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Intermediates.noindex/PhotoDiary.build/Debug-iphonesimulator/PhotoDiaryUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest (in target 'PhotoDiaryUITests' from project 'PhotoDiary')
+    cd /Users/limingshuang/Documents/codes/github/project_lib/photo-diary
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Build/Products/Debug-iphonesimulator/PhotoDiaryUITests-Runner.app/PlugIns/PhotoDiaryUITests.xctest
+
+2026-10-08 20:40:17.745929+0800 PhotoDiary[25479:69702] [library] load_eligibility_plist: Failed to open /Users/limingshuang/Library/Developer/CoreSimulator/Devices/FF9920D0-FDD2-4968-9002-B939C0FC7492/data/Containers/Data/Application/0AFC5554-C8C1-4CEE-8767-B521DDEF9364/private/var/db/eligibilityd/eligibility.plist: No such file or directory(2)
+2026-10-08 20:40:18.879042+0800 PhotoDiary[25479:70093] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-10-08 20:40:19.016203+0800 PhotoDiary[25479:70097] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+Test Suite 'All tests' started at 2026-10-08 20:40:21.308.
+Test Suite 'PhotoDiaryTests.xctest' started at 2026-10-08 20:40:21.309.
+Test Suite 'DiaryStoreTests' started at 2026-10-08 20:40:21.309.
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testAddEntryPersistsMarkdownAndImage]' started.
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testAddEntryPersistsMarkdownAndImage]' passed (0.017 seconds).
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testDeleteEntryRemovesFilesWhenDayBecomesEmpty]' started.
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testDeleteEntryRemovesFilesWhenDayBecomesEmpty]' passed (0.005 seconds).
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testDeleteOneOfTwoKeepsMarkdown]' started.
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testDeleteOneOfTwoKeepsMarkdown]' passed (0.006 seconds).
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testReloadRestoresEntries]' started.
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testReloadRestoresEntries]' passed (0.011 seconds).
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testUpdateEntryPersists]' started.
+Test Case '-[PhotoDiaryTests.DiaryStoreTests testUpdateEntryPersists]' passed (0.006 seconds).
+Test Suite 'DiaryStoreTests' passed at 2026-10-08 20:40:21.355.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.045 (0.046) seconds
+Test Suite 'LLMServiceTests' started at 2026-10-08 20:40:21.355.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testDeepSeekPresetDisablesThinking]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testDeepSeekPresetDisablesThinking]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testDefaultPresetIsDeepSeekFlashWithVision]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testDefaultPresetIsDeepSeekFlashWithVision]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserDisplayTextPartial]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserDisplayTextPartial]' passed (0.132 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserFallbackToPlainText]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserFallbackToPlainText]' passed (0.003 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserFullJSON]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserFullJSON]' passed (0.003 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserHandlesHashPrefixAndEmptyTags]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserHandlesHashPrefixAndEmptyTags]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserStripsCodeFence]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testGenerationParserStripsCodeFence]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeBodyIgnoresInvalidExtraBody]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeBodyIgnoresInvalidExtraBody]' passed (0.002 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeBodyMergesExtraBodyWithoutOverriding]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeBodyMergesExtraBodyWithoutOverriding]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeBodyMultipleImages]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeBodyMultipleImages]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestBuildsCorrectURLRequest]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestBuildsCorrectURLRequest]' passed (0.004 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestRejectsEmptyBaseURL]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestRejectsEmptyBaseURL]' passed (0.003 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestTrimsTrailingSlashInBaseURL]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestTrimsTrailingSlashInBaseURL]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestWithoutImageOmitsImageBlock]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testMakeRequestWithoutImageOmitsImageBlock]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseContentParts]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseContentParts]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseHTTPErrorExtractsServerMessage]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseHTTPErrorExtractsServerMessage]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseInvalidJSON]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseInvalidJSON]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseSuccess]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseResponseSuccess]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseSSELineDelta]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseSSELineDelta]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseSSELineDone]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseSSELineDone]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseSSELineIgnoresNoise]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testParseSSELineIgnoresNoise]' passed (0.054 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testPromptBuilderReplacesPlaceholders]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testPromptBuilderReplacesPlaceholders]' passed (0.019 seconds).
+Test Case '-[PhotoDiaryTests.LLMServiceTests testPromptBuilderUnknownLocation]' started.
+Test Case '-[PhotoDiaryTests.LLMServiceTests testPromptBuilderUnknownLocation]' passed (0.001 seconds).
+Test Suite 'LLMServiceTests' passed at 2026-10-08 20:40:21.661.
+	 Executed 23 tests, with 0 failures (0 unexpected) in 0.228 (0.306) seconds
+Test Suite 'MarkdownDiaryCodecTests' started at 2026-10-08 20:40:21.661.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testDayKeyHelpers]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testDayKeyHelpers]' passed (0.012 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testDaySummaryRenderAndParseRoundTrip]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testDaySummaryRenderAndParseRoundTrip]' passed (0.002 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testEntryHeaderParsing]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testEntryHeaderParsing]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testEscapeConflictingTextLinesRoundTrip]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testEscapeConflictingTextLinesRoundTrip]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testEscapeSummaryHeaderInText]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testEscapeSummaryHeaderInText]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testImageLineParsing]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testImageLineParsing]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testMarkerLinesEscapedInText]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testMarkerLinesEscapedInText]' passed (0.028 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testParseIgnoresLeadingGarbageAndTitle]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testParseIgnoresLeadingGarbageAndTitle]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testParseKeepsMultilineText]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testParseKeepsMultilineText]' passed (0.000 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testRenderAndParseRoundTrip]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testRenderAndParseRoundTrip]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testSearchFilter]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testSearchFilter]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testSearchMatchesTitleAndTags]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testSearchMatchesTitleAndTags]' passed (0.003 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testTimestampCommentRoundTripPreservesExactInstant]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testTimestampCommentRoundTripPreservesExactInstant]' passed (0.001 seconds).
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testTitleAndTagsRoundTrip]' started.
+Test Case '-[PhotoDiaryTests.MarkdownDiaryCodecTests testTitleAndTagsRoundTrip]' passed (0.001 seconds).
+Test Suite 'MarkdownDiaryCodecTests' passed at 2026-10-08 20:40:21.715.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.052 (0.053) seconds
+Test Suite 'UserProfileStoreTests' started at 2026-10-08 20:40:21.715.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testAutoDistillThreshold]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testAutoDistillThreshold]' passed (0.019 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testBuildDistillPromptContainsAllMaterials]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testBuildDistillPromptContainsAllMaterials]' passed (0.004 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testDaySummaryPromptAppendsPersona]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testDaySummaryPromptAppendsPersona]' passed (0.003 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testLoadProfileMissingFileReturnsDefault]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testLoadProfileMissingFileReturnsDefault]' passed (0.005 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testProfileRenderAndLoadRoundTrip]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testProfileRenderAndLoadRoundTrip]' passed (0.048 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testPromptBuilderAppendsPersona]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testPromptBuilderAppendsPersona]' passed (0.004 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testPromptBuilderSkipsEmptyPersona]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testPromptBuilderSkipsEmptyPersona]' passed (0.004 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testRecentEditsTruncatesToTail]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testRecentEditsTruncatesToTail]' passed (0.007 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testRecordEditAppendsAndBumps]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testRecordEditAppendsAndBumps]' passed (0.007 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testRecordEditIgnoresIdenticalOrEmpty]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testRecordEditIgnoresIdenticalOrEmpty]' passed (0.004 seconds).
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testStatsSummary]' started.
+Test Case '-[PhotoDiaryTests.UserProfileStoreTests testStatsSummary]' passed (0.004 seconds).
+Test Suite 'UserProfileStoreTests' passed at 2026-10-08 20:40:21.825.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.108 (0.110) seconds
+Test Suite 'PhotoDiaryTests.xctest' passed at 2026-10-08 20:40:21.825.
+	 Executed 53 tests, with 0 failures (0 unexpected) in 0.433 (0.516) seconds
+Test Suite 'All tests' passed at 2026-10-08 20:40:21.825.
+	 Executed 53 tests, with 0 failures (0 unexpected) in 0.433 (0.517) seconds
+2026-10-08 20:40:26.131146+0800 PhotoDiaryUITests-Runner[25694:70996] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'All tests' started at 2026-10-08 20:40:31.891.
+Test Suite 'PhotoDiaryUITests.xctest' started at 2026-10-08 20:40:31.893.
+Test Suite 'PhotoDiaryUITests' started at 2026-10-08 20:40:31.894.
+Test Case '-[PhotoDiaryUITests.PhotoDiaryUITests testFullFlowWithScreenshots]' started.
+    t =     0.00s Start Test at 2026-10-08 20:40:31.894
+    t =     0.99s Set Up
+    t =     1.00s Open com.photodiary.app
+    t =     1.01s     Launch com.photodiary.app
+    t =     1.51s         Setting up automation session
+    t =     2.53s         Wait for com.photodiary.app to idle
+    t =     5.10s Waiting 5.0s for "光影日记" NavigationBar to exist
+    t =     6.13s     Checking `Expect predicate `existsNoRetry == 1` for object "光影日记" NavigationBar`
+    t =     6.13s         Checking existence of `"光影日记" NavigationBar`
+    t =     6.36s Tap "settingsButton" Button
+    t =     6.36s     Wait for com.photodiary.app to idle
+    t =     6.36s     Find the "settingsButton" Button
+    t =     6.41s     Check for interrupting elements affecting "settingsButton" Button
+    t =     6.44s     Synthesize event
+    t =     6.85s     Wait for com.photodiary.app to idle
+    t =     7.44s Waiting 5.0s for "设置" NavigationBar to exist
+    t =     8.48s     Checking `Expect predicate `existsNoRetry == 1` for object "设置" NavigationBar`
+    t =     8.48s         Checking existence of `"设置" NavigationBar`
+    t =     8.74s Tap "完成" Button
+    t =     8.74s     Wait for com.photodiary.app to idle
+    t =     8.75s     Find the "完成" Button
+    t =     8.80s     Check for interrupting elements affecting "完成" Button
+    t =     8.86s     Synthesize event
+    t =     9.29s     Wait for com.photodiary.app to idle
+    t =     9.54s Waiting 3.0s for "光影日记" NavigationBar to exist
+    t =    10.58s     Checking `Expect predicate `existsNoRetry == 1` for object "光影日记" NavigationBar`
+    t =    10.58s         Checking existence of `"光影日记" NavigationBar`
+    t =    10.61s Waiting 3.0s for "addEntryMenu" Button to exist
+    t =    11.65s     Checking `Expect predicate `existsNoRetry == 1` for object "addEntryMenu" Button`
+    t =    11.65s         Checking existence of `"addEntryMenu" Button`
+    t =    11.87s Tap "addEntryMenu" Button[0.50, 0.50]
+    t =    11.88s     Wait for com.photodiary.app to idle
+    t =    11.88s     Find the "addEntryMenu" Button
+    t =    12.05s     Check for interrupting elements affecting "addEntryMenu" Button
+    t =    12.09s     Synthesize event
+    t =    12.09s         Find the "addEntryMenu" Button
+    t =    12.13s         Find the "addEntryMenu" Button
+    t =    12.16s         Find the "addEntryMenu" Button
+    t =    12.51s     Wait for com.photodiary.app to idle
+    t =    12.52s Waiting 3.0s for "从相册导入" Button to exist
+    t =    13.61s     Checking `Expect predicate `existsNoRetry == 1` for object "从相册导入" Button`
+    t =    13.62s         Checking existence of `"从相册导入" Button`
+    t =    13.71s Tap "从相册导入" Button
+    t =    13.71s     Wait for com.photodiary.app to idle
+    t =    13.72s     Find the "从相册导入" Button
+    t =    13.75s     Check for interrupting elements affecting "photo.on.rectangle" Button
+    t =    13.80s     Synthesize event
+    t =    14.14s     Wait for com.photodiary.app to idle
+    t =    14.45s Waiting 10.0s for Image (Element at index 0) to exist
+    t =    15.53s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    15.53s         Checking existence of `Image (Element at index 0)`
+    t =    15.55s         Capturing element debug description
+    t =    16.48s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    16.48s         Checking existence of `Image (Element at index 0)`
+    t =    16.51s         Capturing element debug description
+    t =    17.61s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    17.64s         Checking existence of `Image (Element at index 0)`
+    t =    17.86s         Capturing element debug description
+    t =    18.53s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    18.53s         Checking existence of `Image (Element at index 0)`
+    t =    18.56s         Capturing element debug description
+    t =    19.51s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    19.51s         Checking existence of `Image (Element at index 0)`
+    t =    19.62s Ignoring failure to get hierarchy for remote element in process 26248 (Error getting main window kAXErrorInvalidUIElement)
+    t =    20.17s Tap Image (Element at index 0)
+    t =    20.17s     Wait for com.photodiary.app to idle
+    t =    20.17s     Find the Image (Element at index 0)
+    t =    20.39s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    20.56s     Synthesize event
+    t =    20.99s         Scroll element to visible
+    t =    21.00s         Find the "PXGGridLayout-Info" Image
+    t =    21.66s         Computed hit point {-1, -1} after scrolling to visible
+    t =    21.66s         Failed: Failed to scroll to visible (by AX action) Image, {{0.0, 292.3}, {132.9, 133.0}}, error: Error kAXErrorCannotComplete performing AXAction kAXScrollToVisibleAction on element AX element pid: 26248, elementOrHash.elementID: 105553140651584.67
+    t =    22.67s     Retrying `Tap Image (Element at index 0)` (attempt #2)
+    t =    22.67s         Wait for com.photodiary.app to idle
+    t =    22.68s         Find the "PXGGridLayout-Info" Image
+    t =    23.03s         Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    23.29s         Synthesize event
+    t =    23.85s             Scroll element to visible
+    t =    23.85s             Find the "PXGGridLayout-Info" Image
+    t =    24.48s             Computed hit point {-1, -1} after scrolling to visible
+    t =    24.48s             Failed: Failed to scroll to visible (by AX action) Image, {{0.0, 292.3}, {132.9, 133.0}}, error: Error kAXErrorCannotComplete performing AXAction kAXScrollToVisibleAction on element AX element pid: 26248, elementOrHash.elementID: 105553140651584.67
+    t =    25.54s     Retrying `Tap Image (Element at index 0)` (attempt #3)
+    t =    25.54s         Wait for com.photodiary.app to idle
+    t =    25.56s         Find the "PXGGridLayout-Info" Image
+    t =    25.71s         Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    25.91s         Synthesize event
+    t =    26.27s             Scroll element to visible
+    t =    26.27s             Find the "PXGGridLayout-Info" Image
+    t =    27.04s             Computed hit point {-1, -1} after scrolling to visible
+    t =    27.04s             Failed: Failed to scroll to visible (by AX action) Image, {{0.0, 292.3}, {132.9, 133.0}}, error: Error kAXErrorCannotComplete performing AXAction kAXScrollToVisibleAction on element AX element pid: 26248, elementOrHash.elementID: 105553140651584.67
+    t =    27.05s Requesting snapshot of accessibility hierarchy for app with pid 25882
+<unknown>:0: error: -[PhotoDiaryUITests.PhotoDiaryUITests testFullFlowWithScreenshots] : Failed to failed to scroll to visible (by AX action) Image, {{0.0, 292.3}, {132.9, 133.0}}, error: Error kAXErrorCannotComplete performing AXAction kAXScrollToVisibleAction on element AX element pid: 26248, elementOrHash.elementID: 105553140651584.67. (Underlying Error: Error kAXErrorCannotComplete performing AXAction kAXScrollToVisibleAction on element AX element pid: 26248, elementOrHash.elementID: 105553140651584.67)
+    t =    27.96s Tear Down
+Test Case '-[PhotoDiaryUITests.PhotoDiaryUITests testFullFlowWithScreenshots]' failed (28.264 seconds).
+Test Case '-[PhotoDiaryUITests.PhotoDiaryUITests testIteration2FeaturesWithScreenshots]' started.
+    t =     0.00s Start Test at 2026-10-08 20:41:00.160
+    t =     0.29s Set Up
+    t =     0.30s Open com.photodiary.app
+    t =     0.30s     Launch com.photodiary.app
+    t =     0.31s         Terminate com.photodiary.app:25882
+    t =     1.74s         Setting up automation session
+    t =     3.25s         Wait for com.photodiary.app to idle
+    t =     5.11s Waiting 5.0s for "光影日记" NavigationBar to exist
+    t =     6.16s     Checking `Expect predicate `existsNoRetry == 1` for object "光影日记" NavigationBar`
+    t =     6.17s         Checking existence of `"光影日记" NavigationBar`
+    t =     6.31s Waiting 3.0s for "先设置 API Key" Button to exist
+    t =     7.35s     Checking `Expect predicate `existsNoRetry == 1` for object "先设置 API Key" Button`
+    t =     7.35s         Checking existence of `"先设置 API Key" Button`
+    t =     7.43s Waiting 3.0s for "addEntryMenu" Button to exist
+    t =     8.44s     Checking `Expect predicate `existsNoRetry == 1` for object "addEntryMenu" Button`
+    t =     8.44s         Checking existence of `"addEntryMenu" Button`
+    t =     8.46s Tap "addEntryMenu" Button[0.50, 0.50]
+    t =     8.46s     Wait for com.photodiary.app to idle
+    t =     8.46s     Find the "addEntryMenu" Button
+    t =     8.48s     Check for interrupting elements affecting "addEntryMenu" Button
+    t =     8.50s     Synthesize event
+    t =     8.50s         Find the "addEntryMenu" Button
+    t =     8.52s         Find the "addEntryMenu" Button
+    t =     8.53s         Find the "addEntryMenu" Button
+    t =     8.84s     Wait for com.photodiary.app to idle
+    t =     8.84s Waiting 3.0s for "从相册导入" Button to exist
+    t =     9.87s     Checking `Expect predicate `existsNoRetry == 1` for object "从相册导入" Button`
+    t =     9.87s         Checking existence of `"从相册导入" Button`
+    t =     9.91s Tap "从相册导入" Button
+    t =     9.91s     Wait for com.photodiary.app to idle
+    t =     9.91s     Find the "从相册导入" Button
+    t =     9.93s     Check for interrupting elements affecting "photo.on.rectangle" Button
+    t =     9.95s     Synthesize event
+    t =    10.24s     Wait for com.photodiary.app to idle
+    t =    10.64s Waiting 10.0s for Image (Element at index 0) to exist
+    t =    11.64s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    11.64s         Checking existence of `Image (Element at index 0)`
+    t =    11.70s         Capturing element debug description
+    t =    12.73s     Checking `Expect predicate `existsNoRetry == 1` for object Image (Element at index 0)`
+    t =    12.73s         Checking existence of `Image (Element at index 0)`
+    t =    13.11s Tap Image (Element at index 0)
+    t =    13.11s     Wait for com.photodiary.app to idle
+    t =    13.12s     Find the Image (Element at index 0)
+    t =    13.35s     Check for interrupting elements affecting "PXGGridLayout-Info" Image
+    t =    13.56s     Synthesize event
+    t =    13.88s     Wait for com.photodiary.app to idle
+    t =    14.40s Waiting 5.0s for "新日记" NavigationBar to exist
+    t =    15.43s     Checking `Expect predicate `existsNoRetry == 1` for object "新日记" NavigationBar`
+    t =    15.43s         Checking existence of `"新日记" NavigationBar`
+    t =    15.50s Waiting 5.0s for "去设置 API Key" Button to exist
+    t =    16.52s     Checking `Expect predicate `existsNoRetry == 1` for object "去设置 API Key" Button`
+    t =    16.52s         Checking existence of `"去设置 API Key" Button`
+    t =    16.63s Waiting 3.0s for "diaryTextEditor" TextView to exist
+    t =    17.68s     Checking `Expect predicate `existsNoRetry == 1` for object "diaryTextEditor" TextView`
+    t =    17.68s         Checking existence of `"diaryTextEditor" TextView`
+    t =    17.76s Tap "diaryTextEditor" TextView
+    t =    17.76s     Wait for com.photodiary.app to idle
+    t =    17.77s     Find the "diaryTextEditor" TextView
+    t =    17.86s     Check for interrupting elements affecting "diaryTextEditor" TextView
+    t =    18.01s     Synthesize event
+    t =    18.37s     Wait for com.photodiary.app to idle
+    t =    19.60s Type '傍晚去江边看了日落，风很舒服。' into "diaryTextEditor" TextView
+    t =    19.60s     Wait for com.photodiary.app to idle
+    t =    19.62s     Find the "diaryTextEditor" TextView
+    t =    19.70s     Check for interrupting elements affecting "diaryTextEditor" TextView
+    t =    19.74s     Synthesize event
+    t =    20.20s     Wait for com.photodiary.app to idle
+    t =    20.47s Tap "保存" Button
+    t =    20.47s     Wait for com.photodiary.app to idle
+    t =    20.48s     Find the "保存" Button
+    t =    20.60s     Check for interrupting elements affecting "保存" Button
+    t =    20.65s     Synthesize event
+    t =    20.97s     Wait for com.photodiary.app to idle
+    t =    21.29s Waiting 5.0s for Cell (First Match) to exist
+    t =    22.30s     Checking `Expect predicate `existsNoRetry == 1` for object Cell (First Match)`
+    t =    22.30s         Checking existence of `Cell (First Match)`
+    t =    22.41s Checking existence of `StaticText (First Match)`
+    t =    22.52s Swipe down Target Application 'com.photodiary.app'
+    t =    22.52s     Wait for com.photodiary.app to idle
+    t =    22.53s     Find the Target Application 'com.photodiary.app'
+    t =    22.55s     Check for interrupting elements affecting "光影日记" Application
+    t =    22.58s     Synthesize event
+    t =    23.01s     Wait for com.photodiary.app to idle
+    t =    23.48s Waiting 5.0s for SearchField (First Match) to exist
+    t =    24.52s     Checking `Expect predicate `existsNoRetry == 1` for object SearchField (First Match)`
+    t =    24.52s         Checking existence of `SearchField (First Match)`
+    t =    24.55s Tap SearchField (First Match)
+    t =    24.55s     Wait for com.photodiary.app to idle
+    t =    24.55s     Find the SearchField (First Match)
+    t =    24.57s     Check for interrupting elements affecting "搜索正文、地点、日期" SearchField
+    t =    24.59s     Synthesize event
+    t =    24.90s     Wait for com.photodiary.app to idle
+    t =    25.11s Type '火锅' into "搜索正文、地点、日期" SearchField
+    t =    25.11s     Wait for com.photodiary.app to idle
+    t =    25.12s     Find the "搜索正文、地点、日期" SearchField
+    t =    25.14s     Check for interrupting elements affecting "搜索正文、地点、日期" SearchField
+    t =    25.17s     Synthesize event
+    t =    25.41s     Wait for com.photodiary.app to idle
+    t =    26.86s Checking existence of `Cell (First Match)`
+    t =    27.05s Tap "搜索正文、地点、日期" SearchField
+    t =    27.05s     Wait for com.photodiary.app to idle
+    t =    27.06s     Find the "搜索正文、地点、日期" SearchField
+    t =    27.15s     Check for interrupting elements affecting "搜索正文、地点、日期" SearchField
+    t =    27.19s     Synthesize event
+    t =    27.48s     Wait for com.photodiary.app to idle
+    t =    27.63s Checking existence of `"Clear text" Button`
+    t =    27.73s Checking existence of `"清除文本" Button`
+    t =    27.80s Tap "清除文本" Button
+    t =    27.80s     Wait for com.photodiary.app to idle
+    t =    27.80s     Find the "清除文本" Button
+    t =    27.84s     Check for interrupting elements affecting "清除文本" Button
+    t =    27.87s     Synthesize event
+    t =    28.16s     Wait for com.photodiary.app to idle
+    t =    28.21s Find the "搜索正文、地点、日期" SearchField
+    t =    28.25s Type '日落' into "搜索正文、地点、日期" SearchField
+    t =    28.25s     Wait for com.photodiary.app to idle
+    t =    28.25s     Find the "搜索正文、地点、日期" SearchField
+    t =    28.29s     Check for interrupting elements affecting "搜索正文、地点、日期" SearchField
+    t =    28.33s     Synthesize event
+    t =    28.56s     Wait for com.photodiary.app to idle
+    t =    29.58s Waiting 3.0s for Cell (First Match) to exist
+    t =    30.62s     Checking `Expect predicate `existsNoRetry == 1` for object Cell (First Match)`
+    t =    30.62s         Checking existence of `Cell (First Match)`
+    t =    30.76s Checking existence of `"Cancel" Button`
+    t =    30.85s Checking existence of `"取消" Button`
+    t =    30.87s Tap "取消" Button
+    t =    30.88s     Wait for com.photodiary.app to idle
+    t =    30.88s     Find the "取消" Button
+    t =    30.91s     Check for interrupting elements affecting "取消" Button
+    t =    30.95s     Synthesize event
+    t =    31.25s     Wait for com.photodiary.app to idle
+    t =    31.64s Waiting 5.0s for Cell (First Match) to exist
+    t =    32.68s     Checking `Expect predicate `existsNoRetry == 1` for object Cell (First Match)`
+    t =    32.68s         Checking existence of `Cell (First Match)`
+    t =    32.73s Tap Cell (First Match)
+    t =    32.73s     Wait for com.photodiary.app to idle
+    t =    32.73s     Find the Cell (First Match)
+    t =    32.77s     Check for interrupting elements affecting Cell
+    t =    32.80s     Synthesize event
+    t =    33.10s     Wait for com.photodiary.app to idle
+    t =    34.60s Waiting 3.0s for "daySummaryButton" Button to exist
+    t =    35.64s     Checking `Expect predicate `existsNoRetry == 1` for object "daySummaryButton" Button`
+    t =    35.64s         Checking existence of `"daySummaryButton" Button`
+    t =    35.82s Tap "daySummaryButton" Button
+    t =    35.82s     Wait for com.photodiary.app to idle
+    t =    35.83s     Find the "daySummaryButton" Button
+    t =    35.85s     Check for interrupting elements affecting "daySummaryButton" Button
+    t =    35.87s     Synthesize event
+    t =    36.17s     Wait for com.photodiary.app to idle
+    t =    36.52s Waiting 3.0s for "操作失败" Alert to exist
+    t =    37.55s     Checking `Expect predicate `existsNoRetry == 1` for object "操作失败" Alert`
+    t =    37.55s         Checking existence of `"操作失败" Alert`
+    t =    37.65s Tap "好的" Button
+    t =    37.65s     Wait for com.photodiary.app to idle
+    t =    37.65s     Find the "好的" Button
+    t =    37.67s     Check for interrupting elements affecting "好的" Button
+    t =    37.70s     Synthesize event
+    t =    37.99s     Wait for com.photodiary.app to idle
+    t =    38.23s Waiting 3.0s for "entryMenuButton" Button to exist
+    t =    39.24s     Checking `Expect predicate `existsNoRetry == 1` for object "entryMenuButton" Button`
+    t =    39.25s         Checking existence of `"entryMenuButton" Button`
+    t =    39.29s Tap "entryMenuButton" Button[0.50, 0.50]
+    t =    39.29s     Wait for com.photodiary.app to idle
+    t =    39.30s     Find the "entryMenuButton" Button
+    t =    39.34s     Check for interrupting elements affecting "entryMenuButton" Button
+    t =    39.38s     Synthesize event
+    t =    39.39s         Find the "entryMenuButton" Button
+    t =    39.42s         Find the "entryMenuButton" Button
+    t =    39.46s         Find the "entryMenuButton" Button
+    t =    39.79s     Wait for com.photodiary.app to idle
+    t =    40.80s Waiting 3.0s for "重新生成" Button to exist
+    t =    41.83s     Checking `Expect predicate `existsNoRetry == 1` for object "重新生成" Button`
+    t =    41.83s         Checking existence of `"重新生成" Button`
+    t =    42.00s Tear Down
+Test Case '-[PhotoDiaryUITests.PhotoDiaryUITests testIteration2FeaturesWithScreenshots]' passed (42.341 seconds).
+Test Suite 'PhotoDiaryUITests' failed at 2026-10-08 20:41:42.501.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 70.605 (70.608) seconds
+Test Suite 'PhotoDiaryUITests.xctest' failed at 2026-10-08 20:41:42.504.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 70.605 (70.610) seconds
+Test Suite 'All tests' failed at 2026-10-08 20:41:42.505.
+	 Executed 2 tests, with 1 failure (0 unexpected) in 70.605 (70.614) seconds
+2026-10-08 20:42:11.823 xcodebuild[23571:60337] [MT] IDETestOperationsObserverDebug: 183.950 elapsed -- Testing started completed.
+2026-10-08 20:42:11.824 xcodebuild[23571:60337] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-08 20:42:11.824 xcodebuild[23571:60337] [MT] IDETestOperationsObserverDebug: 183.950 sec, +183.950 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/limingshuang/Library/Developer/Xcode/DerivedData/PhotoDiary-dhqaxwanvkeryyabzrhvqxnlnqen/Logs/Test/Test-PhotoDiary-2026.10.08_20-39-02-+0800.xcresult
+
+Failing tests:
+	PhotoDiaryUITests.testFullFlowWithScreenshots()
+
+** TEST FAILED **
+
+Testing started
