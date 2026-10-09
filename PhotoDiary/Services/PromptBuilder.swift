@@ -42,6 +42,27 @@ enum PromptBuilder {
         return appendingPersona(persona, to: base)
     }
 
+    /// 「月度回顾」prompt：{month} {count} {timeline}；timeline 为每天一行「MM-dd 标题或正文首行」，上限 40 行防超长
+    static func buildMonthlySummaryPrompt(template: String, month: String, days: [DiaryDay], persona: String? = nil) -> String {
+        var lines: [String] = []
+        var count = 0
+        for day in days.sorted(by: { $0.key < $1.key }) {
+            for entry in day.entries where !entry.isDaySummary {
+                count += 1
+                let snippet = entry.title
+                    ?? entry.text.components(separatedBy: .newlines).first
+                        .map { String($0.prefix(30)) } ?? ""
+                lines.append("\(day.key.suffix(5)) \(snippet)")
+            }
+        }
+        if lines.count > 40 { lines = Array(lines.prefix(40)) }
+        let base = template
+            .replacingOccurrences(of: "{month}", with: month)
+            .replacingOccurrences(of: "{count}", with: "\(count)")
+            .replacingOccurrences(of: "{timeline}", with: lines.joined(separator: "\n"))
+        return appendingPersona(persona, to: base)
+    }
+
     /// 画像段统一追加在 prompt 末尾（自定义模板没有占位符也能生效）
     private static func appendingPersona(_ persona: String?, to prompt: String) -> String {
         let trimmed = persona?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""

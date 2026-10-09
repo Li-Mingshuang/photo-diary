@@ -260,3 +260,76 @@ enum MarkdownDiaryCodec {
         return name.isEmpty ? nil : name
     }
 }
+
+/// 月度回顾（月记）文件编解码：`diaries/monthly/yyyy-MM.md`，独立于按天日记文件
+enum MonthlySummaryCodec {
+
+    struct MonthlySummary: Equatable {
+        var text: String
+        var generatedAt: Date?
+        var model: String?
+        var entryCount: Int
+    }
+
+    static func fileName(forMonthKey monthKey: String) -> String {
+        "\(monthKey).md"
+    }
+
+    /// "2026-10" → "2026年10月"（非法输入原样返回）
+    static func monthTitle(for monthKey: String) -> String {
+        let parts = monthKey.split(separator: "-")
+        guard parts.count == 2, let year = Int(parts[0]), let month = Int(parts[1]),
+              (1...12).contains(month) else { return monthKey }
+        return "\(year)年\(month)月"
+    }
+
+    static func render(monthKey: String, text: String, generatedAt: Date, model: String, entryCount: Int) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return """
+        # \(monthTitle(for: monthKey)) · 月记
+
+        <!-- generated: \(formatter.string(from: generatedAt)) · model: \(model) · entries: \(entryCount) -->
+
+        \(text.trimmingCharacters(in: .whitespacesAndNewlines))
+
+        """
+    }
+
+    /// 容错解析：取注释行元数据 + 其后正文；文件缺失或格式不符返回 nil
+    static func load(from url: URL) -> MonthlySummary? {
+        guard let content = try? String(contentsOf: url, encoding: .utf8) else { return nil }
+        var summary = MonthlySummary(text: "", generatedAt: nil, model: nil, entryCount: 0)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
+        var bodyStarted = false
+        var bodyLines: [String] = []
+        for line in content.components(separatedBy: .newlines) {
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if !bodyStarted {
+                if trimmed.hasPrefix("<!-- generated: ") {
+                    // <!-- generated: ISO · model: xxx · entries: 12 -->
+                    for part in trimmed.dropFirst(16).components(separatedBy: " · ") {
+                        if part.hasPrefix("model: ") {
+                            summary.model = String(part.dropFirst(7)).replacingOccurrences(of: " -->", with: "")
+                        } else if part.hasPrefix("entries: ") {
+                            summary.entryCount = Int(part.dropFirst(9).replacingOccurrences(of: " -->", with: "")) ?? 0
+                        } else {
+                            summary.generatedAt = formatter.date(from: part)
+                        }
+                    }
+                    continue
+                }
+                if trimmed.isEmpty || trimmed.hasPrefix("#") { continue }
+                bodyStarted = true
+            }
+            bodyLines.append(line)
+        }
+        summary.text = bodyLines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !summary.text.isEmpty else { return nil }
+        return summary
+    }
+}

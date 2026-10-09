@@ -99,3 +99,73 @@ struct EntryDraft: Identifiable {
     var location: CLLocation?
     var locationName: String?
 }
+
+/// 回顾页统计：标签墙 / 地图足迹 / 月度分组 / 洞察卡（全部纯函数，可测）
+enum DiaryStats {
+
+    /// 洞察卡数据
+    struct Insight: Equatable {
+        var dayCount: Int
+        var entryCount: Int
+        var topLocation: String?
+        var topTags: [String]
+    }
+
+    /// 标签 → 次数（不含当日小结），按次数降序、同次按字典序
+    static func tagCloud(days: [DiaryDay]) -> [(tag: String, count: Int)] {
+        var counts: [String: Int] = [:]
+        for day in days {
+            for entry in day.entries where !entry.isDaySummary {
+                for tag in entry.tags { counts[tag, default: 0] += 1 }
+            }
+        }
+        return counts
+            .sorted { $0.value != $1.value ? $0.value > $1.value : $0.key < $1.key }
+            .map { (tag: $0.key, count: $0.value) }
+    }
+
+    /// 带坐标的普通条目（地图标注用），按天升序
+    static func locatedEntries(days: [DiaryDay]) -> [(dayKey: String, entry: DiaryEntry)] {
+        days.sorted { $0.key < $1.key }.flatMap { day in
+            day.entries
+                .filter { !$0.isDaySummary && $0.latitude != nil && $0.longitude != nil }
+                .map { (dayKey: day.key, entry: $0) }
+        }
+    }
+
+    /// 按月分组：("yyyy-MM", 天数, 条目数)，按月份降序（最近在前）
+    static func monthlyGroups(days: [DiaryDay]) -> [(month: String, dayCount: Int, entryCount: Int)] {
+        var byMonth: [String: (days: Set<String>, entries: Int)] = [:]
+        for day in days {
+            let month = String(day.key.prefix(7)) // yyyy-MM-dd → yyyy-MM
+            var group = byMonth[month] ?? (days: [], entries: 0)
+            group.days.insert(day.key)
+            group.entries += day.entries.filter { !$0.isDaySummary }.count
+            byMonth[month] = group
+        }
+        return byMonth
+            .sorted { $0.key > $1.key }
+            .map { (month: $0.key, dayCount: $0.value.days.count, entryCount: $0.value.entries) }
+    }
+
+    /// 洞察卡：N 天 M 条 · 最常去 X · 高频标签 Top 3
+    static func insight(days: [DiaryDay]) -> Insight {
+        var locationCounts: [String: Int] = [:]
+        var entryCount = 0
+        for day in days {
+            for entry in day.entries where !entry.isDaySummary {
+                entryCount += 1
+                if let location = entry.locationName, !location.isEmpty {
+                    locationCounts[location, default: 0] += 1
+                }
+            }
+        }
+        let topLocation = locationCounts.sorted { $0.value != $1.value ? $0.value > $1.value : $0.key < $1.key }.first?.key
+        return Insight(
+            dayCount: days.count,
+            entryCount: entryCount,
+            topLocation: topLocation,
+            topTags: tagCloud(days: days).prefix(3).map(\.tag)
+        )
+    }
+}

@@ -43,9 +43,28 @@ final class DiaryStore: ObservableObject {
         rootURL.appendingPathComponent("\(key).md")
     }
 
-    func imageURL(for fileName: String) -> URL {
-        imagesURL.appendingPathComponent(fileName)
-    }
+func imageURL(for fileName: String) -> URL {
+imagesURL.appendingPathComponent(fileName)
+}
+
+// MARK: - 月度回顾文件（diaries/monthly/yyyy-MM.md，不参与按天索引）
+
+var monthlyDirectory: URL {
+    rootURL.appendingPathComponent("monthly", isDirectory: true)
+}
+
+func loadMonthlySummary(for monthKey: String) -> MonthlySummaryCodec.MonthlySummary? {
+    MonthlySummaryCodec.load(from: monthlyDirectory.appendingPathComponent(MonthlySummaryCodec.fileName(forMonthKey: monthKey)))
+}
+
+func saveMonthlySummary(monthKey: String, text: String, model: String, entryCount: Int) throws {
+    try FileManager.default.createDirectory(at: monthlyDirectory, withIntermediateDirectories: true)
+    let markdown = MonthlySummaryCodec.render(
+        monthKey: monthKey, text: text, generatedAt: Date(), model: model, entryCount: entryCount
+    )
+    try markdown.write(to: monthlyDirectory.appendingPathComponent(MonthlySummaryCodec.fileName(forMonthKey: monthKey)),
+                       atomically: true, encoding: .utf8)
+}
 
     // MARK: - 读取
 

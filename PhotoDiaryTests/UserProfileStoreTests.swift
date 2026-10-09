@@ -164,3 +164,85 @@ final class UserProfileStoreTests: XCTestCase {
         XCTAssertTrue(prompt.contains("画像内容"))
     }
 }
+
+final class DiaryStatsTests: XCTestCase {
+
+    private func entry(_ text: String, location: String? = nil, lat: Double? = nil, lon: Double? = nil,
+                       summary: Bool = false, title: String? = nil, tags: [String] = []) -> DiaryEntry {
+        DiaryEntry(createdAt: Date(), text: text, locationName: location, latitude: lat, longitude: lon,
+                   isDaySummary: summary, title: title, tags: tags)
+    }
+
+    private var sampleDays: [DiaryDay] {
+        [
+            DiaryDay(key: "2026-10-08", entries: [
+                entry("傍晚又去公园", location: "静安公园", lat: 31.2, lon: 121.4, title: "银杏黄了", tags: ["公园", "秋天"]),
+                entry("月小结", summary: true, tags: ["不计入"]),
+            ]),
+            DiaryDay(key: "2026-10-01", entries: [
+                entry("上午在公园", location: "静安公园", tags: ["公园"]),
+            ]),
+            DiaryDay(key: "2026-09-15", entries: [
+                entry("吃了一顿火锅", location: "海底捞", lat: 31.1, lon: 121.3, tags: ["火锅"]),
+                entry("无坐标的一条"),
+            ]),
+        ]
+    }
+
+    func testTagCloudCountsOrderAndExcludesSummary() {
+        let cloud = DiaryStats.tagCloud(days: sampleDays)
+        // 同次数按 Unicode 字典序：火(U+706B) < 秋(U+79CB)
+        XCTAssertEqual(cloud.map(\.tag), ["公园", "火锅", "秋天"])
+        XCTAssertEqual(cloud.first?.count, 2)
+        XCTAssertFalse(cloud.contains { $0.tag == "不计入" })
+    }
+
+    func testLocatedEntriesFiltersAndSorts() {
+        let located = DiaryStats.locatedEntries(days: sampleDays)
+        XCTAssertEqual(located.count, 2)
+        XCTAssertEqual(located.map(\.dayKey), ["2026-09-15", "2026-10-08"]) // 按天升序
+    }
+
+    func testMonthlyGroups() {
+        let groups = DiaryStats.monthlyGroups(days: sampleDays)
+        XCTAssertEqual(groups.map(\.month), ["2026-10", "2026-09"]) // 降序
+        XCTAssertEqual(groups[0].dayCount, 2)
+        XCTAssertEqual(groups[0].entryCount, 2) // 小结不计入
+        XCTAssertEqual(groups[1].dayCount, 1)
+        XCTAssertEqual(groups[1].entryCount, 2)
+    }
+
+    func testInsight() {
+        let insight = DiaryStats.insight(days: sampleDays)
+        XCTAssertEqual(insight.dayCount, 3)
+        XCTAssertEqual(insight.entryCount, 4)
+        XCTAssertEqual(insight.topLocation, "静安公园")
+        XCTAssertEqual(insight.topTags.first, "公园")
+        XCTAssertEqual(insight.topTags.count, 3)
+    }
+
+    func testBuildMonthlySummaryPrompt() {
+        let prompt = PromptBuilder.buildMonthlySummaryPrompt(
+            template: "月份 {month} 共 {count} 条：\n{timeline}",
+            month: "2026年10月",
+            days: sampleDays,
+            persona: "画像内容"
+        )
+        XCTAssertTrue(prompt.contains("月份 2026年10月 共 4 条"))
+        XCTAssertTrue(prompt.contains("10-08 银杏黄了")) // 标题优先
+        XCTAssertTrue(prompt.contains("09-15 吃了一顿火锅"))
+        XCTAssertFalse(prompt.contains("月小结")) // 小结不进 timeline
+        XCTAssertTrue(prompt.contains("作者背景与文风"))
+    }
+
+    func testBuildMonthlySummaryPromptTruncatesLongFirstLine() {
+        let longText = String(repeating: "很长的正文。", count: 20)
+        let days = [DiaryDay(key: "2026-10-01", entries: [entry(longText)])]
+        let prompt = PromptBuilder.buildMonthlySummaryPrompt(
+            template: "{timeline}", month: "2026年10月", days: days
+        )
+        // 正文首行截断到 30 字
+        XCTAssertTrue(prompt.contains(String(longText.prefix(30))))
+        XCTAssertFalse(prompt.contains(String(longText.prefix(31))))
+    }
+}

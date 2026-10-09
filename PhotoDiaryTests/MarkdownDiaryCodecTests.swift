@@ -289,3 +289,53 @@ final class MarkdownDiaryCodecTests: XCTestCase {
         XCTAssertFalse(DiaryStore.isValidDayKey("随便什么"))
     }
 }
+
+final class MonthlySummaryCodecTests: XCTestCase {
+
+    func testRenderAndLoadRoundTrip() throws {
+        let dir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("monthly-test-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: dir) }
+
+        let date = Date(timeIntervalSince1970: 1_780_000_000)
+        let markdown = MonthlySummaryCodec.render(
+            monthKey: "2026-10",
+            text: "这个月去了很多次公园。\n银杏黄了，人也慢下来了。",
+            generatedAt: date, model: "deepseek-flash", entryCount: 12
+        )
+        XCTAssertTrue(markdown.contains("# 2026年10月 · 月记"))
+        XCTAssertTrue(markdown.contains("model: deepseek-flash"))
+        XCTAssertTrue(markdown.contains("entries: 12"))
+
+        let url = dir.appendingPathComponent("2026-10.md")
+        try markdown.write(to: url, atomically: true, encoding: .utf8)
+        let loaded = MonthlySummaryCodec.load(from: url)
+        XCTAssertEqual(loaded?.text, "这个月去了很多次公园。\n银杏黄了，人也慢下来了。")
+        XCTAssertEqual(loaded?.model, "deepseek-flash")
+        XCTAssertEqual(loaded?.entryCount, 12)
+        XCTAssertEqual(loaded?.generatedAt?.timeIntervalSince1970 ?? 0, date.timeIntervalSince1970, accuracy: 1)
+    }
+
+    func testMonthTitle() {
+        XCTAssertEqual(MonthlySummaryCodec.monthTitle(for: "2026-10"), "2026年10月")
+        XCTAssertEqual(MonthlySummaryCodec.monthTitle(for: "2026-01"), "2026年1月")
+        XCTAssertEqual(MonthlySummaryCodec.monthTitle(for: "2026-13"), "2026-13")
+        XCTAssertEqual(MonthlySummaryCodec.monthTitle(for: "随便"), "随便")
+    }
+
+    func testLoadMissingFileReturnsNil() {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("nope-\(UUID().uuidString).md")
+        XCTAssertNil(MonthlySummaryCodec.load(from: url))
+    }
+
+    func testLoadEmptyBodyReturnsNil() throws {
+        let dir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("monthly-test-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: dir) }
+        let url = dir.appendingPathComponent("2026-10.md")
+        try "# 2026年10月 · 月记\n\n<!-- generated: 2026-10-08T17:00:00+08:00 · model: m · entries: 3 -->\n\n".write(to: url, atomically: true, encoding: .utf8)
+        XCTAssertNil(MonthlySummaryCodec.load(from: url))
+    }
+}

@@ -22,6 +22,18 @@ struct ContentView: View {
     }
 
     var body: some View {
+        TabView {
+            diaryTab
+                .tabItem { Label("日记", systemImage: "book.closed") }
+            NavigationStack {
+                ReviewView(store: store, config: llmConfig, profileStore: profileStore)
+            }
+            .tabItem { Label("回顾", systemImage: "chart.bar.doc.horizontal") }
+        }
+    }
+
+    /// 「日记」Tab：按天列表（原首页）
+    private var diaryTab: some View {
         NavigationStack {
             content
                 .navigationTitle("光影日记")

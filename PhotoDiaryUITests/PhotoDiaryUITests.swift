@@ -163,6 +163,54 @@ final class PhotoDiaryUITests: XCTestCase {
         save("17-entry-menu")
     }
 
+    /// 迭代五：回顾 Tab——空态引导、统计洞察卡、月度区（无 Key 时生成按钮禁用）。
+    @MainActor
+    func testReviewTabWithScreenshots() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-UITestResetData"]
+        app.launch()
+
+        // 1. 空数据时回顾 Tab 显示引导空态
+        XCTAssertTrue(app.navigationBars["光影日记"].waitForExistence(timeout: 5))
+        app.tabBars.buttons["回顾"].tap()
+        XCTAssertTrue(app.navigationBars["回顾"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["还没有可回顾的内容"].waitForExistence(timeout: 3))
+        save("18-review-empty")
+
+        // 2. 回「日记」Tab 造一条日记
+        app.tabBars.buttons["日记"].tap()
+        let addMenu = app.buttons["addEntryMenu"]
+        XCTAssertTrue(addMenu.waitForExistence(timeout: 3))
+        addMenu.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        let importButton = app.buttons["从相册导入"]
+        XCTAssertTrue(importButton.waitForExistence(timeout: 3))
+        importButton.tap()
+        let firstPhoto = app.scrollViews.images.element(boundBy: 0)
+        XCTAssertTrue(firstPhoto.waitForExistence(timeout: 10))
+        sleep(2) // picker 网格稳定（同 testFullFlow 的坐标点击解法）
+        firstPhoto.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        let editor = app.textViews["diaryTextEditor"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        editor.tap()
+        editor.typeText("在公园看了一下午银杏。")
+        app.navigationBars["新日记"].buttons["保存"].tap()
+        XCTAssertTrue(app.cells.containing(NSPredicate(format: "label CONTAINS %@", "条记录")).firstMatch.waitForExistence(timeout: 5))
+
+        // 3. 回顾 Tab：洞察卡 + 月度区（无 Key 时「生成月记」仍可见，点进去按钮禁用）
+        app.tabBars.buttons["回顾"].tap()
+        XCTAssertTrue(app.staticTexts["1 天 · 1 条记录"].waitForExistence(timeout: 3))
+        // 无标签/无坐标数据时标签墙与地图区块优雅隐藏
+        XCTAssertFalse(app.staticTexts["标签墙"].exists)
+        XCTAssertFalse(app.staticTexts["足迹地图"].exists)
+        save("19-review-insight")
+
+        XCTAssertTrue(app.staticTexts["月度回顾"].waitForExistence(timeout: 3))
+        app.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "生成月记")).firstMatch.tap()
+        XCTAssertTrue(app.navigationBars.containing(NSPredicate(format: "label CONTAINS %@", "月记")).firstMatch.waitForExistence(timeout: 3))
+        XCTAssertFalse(app.navigationBars.buttons["生成"].isEnabled) // 无 Key 禁用
+        save("20-review-monthly-nokey")
+    }
+
     private func save(_ name: String) {
         let screenshot = XCUIScreen.main.screenshot()
         let url = URL(fileURLWithPath: "\(shotDir)/\(name).png")
