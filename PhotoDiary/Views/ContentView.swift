@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var showingSettings = false
     @State private var showingCamera = false
     @State private var showingPhotosPicker = false
+    @State private var showingVoiceEntry = false
     @State private var photosPickerItem: PhotosPickerItem?
     @State private var draft: EntryDraft?
     @State private var importError: String?
@@ -64,6 +65,11 @@ struct ContentView: View {
                             } label: {
                                 Label("从相册导入", systemImage: "photo.on.rectangle")
                             }
+                            Button {
+                                showingVoiceEntry = true
+                            } label: {
+                                Label("语音记录", systemImage: "mic")
+                            }
                         } label: {
                             Image(systemName: "plus.circle.fill")
                                 .font(.title3)
@@ -83,6 +89,9 @@ struct ContentView: View {
                 }
                 .sheet(item: $draft) { draft in
                     AddEntryView(draft: draft, store: store, config: llmConfig, profileStore: profileStore)
+                }
+                .sheet(isPresented: $showingVoiceEntry) {
+                    VoiceEntryView(store: store, config: llmConfig, profileStore: profileStore)
                 }
                 .onChange(of: photosPickerItem) { _, item in
                     Task { await importPhoto(item) }

@@ -35,6 +35,8 @@ struct DiaryEntry: Identifiable, Equatable {
     var createdAt: Date
     var text: String
     var imageFileName: String?
+    /// 语音日记的音频文件（audio/ 目录下，可选，老数据没有）
+    var audioFileName: String?
     var locationName: String?
     var latitude: Double?
     var longitude: Double?

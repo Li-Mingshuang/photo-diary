@@ -63,6 +63,17 @@ enum PromptBuilder {
         return appendingPersona(persona, to: base)
     }
 
+    /// 「语音整理」prompt：{datetime} {transcript}；persona 非空时追加画像段
+    static func buildVoicePolishPrompt(template: String, date: Date, transcript: String, persona: String? = nil) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.dateFormat = "yyyy年M月d日 EEEE HH:mm"
+        let base = template
+            .replacingOccurrences(of: "{datetime}", with: formatter.string(from: date))
+            .replacingOccurrences(of: "{transcript}", with: transcript)
+        return appendingPersona(persona, to: base)
+    }
+
     /// 画像段统一追加在 prompt 末尾（自定义模板没有占位符也能生效）
     private static func appendingPersona(_ persona: String?, to prompt: String) -> String {
         let trimmed = persona?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""

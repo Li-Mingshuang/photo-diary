@@ -91,6 +91,17 @@ enum DefaultPrompt {
     本月片段：
     {timeline}
     """
+
+    /// 「语音日记整理」专用模板：把口语转录整理成日记正文（纯文本调用）
+    static let voicePolishTemplate = """
+    你是一位细腻的中文日记作者。下面是一段语音转录（口语，可能有语气词和重复），记录时间是 {datetime}。请整理成一段自然连贯的日记正文（60~150字），第一人称。
+    要求：
+    - 保留原意与细节，去掉语气词和口头重复；
+    - 不要标题、不要列表、不要解释，直接输出正文。
+
+    转录原文：
+    {transcript}
+    """
 }
 
 /// LLM 配置的持久化存储：普通配置走 UserDefaults，API Key 走 Keychain

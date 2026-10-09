@@ -63,6 +63,10 @@ enum MarkdownDiaryCodec {
                 block.append("![照片](images/\(imageName))")
                 block.append("")
             }
+            if let audioName = entry.audioFileName {
+                block.append("![录音](audio/\(audioName))")
+                block.append("")
+            }
             // AI 生成的标题/标签标记行（老条目没有则不输出）
             if let title = entry.title, !title.isEmpty {
                 block.append("title: \(title)")
@@ -166,7 +170,8 @@ enum MarkdownDiaryCodec {
             if line.hasPrefix("\\") {
                 let unescaped = String(line.dropFirst())
                 if unescaped == "---" || unescaped == summaryHeader || isMarkerLine(unescaped)
-                    || parseEntryHeader(unescaped) != nil || parseImageLine(unescaped) != nil {
+                    || parseEntryHeader(unescaped) != nil || parseImageLine(unescaped) != nil
+                    || parseAudioLine(unescaped) != nil {
                     textLines.append(unescaped)
                     continue
                 }
@@ -174,6 +179,11 @@ enum MarkdownDiaryCodec {
 
             if let imageName = parseImageLine(line) {
                 current?.imageFileName = imageName
+                continue
+            }
+
+            if let audioName = parseAudioLine(line) {
+                current?.audioFileName = audioName
                 continue
             }
 
@@ -219,11 +229,12 @@ enum MarkdownDiaryCodec {
         line.hasPrefix("title: ") || line.hasPrefix("tags: ")
     }
 
-    /// 正文行若与日记语法冲突（分隔线/条目标题/小结标题/图片行/标记行），加反斜杠转义
+    /// 正文行若与日记语法冲突（分隔线/条目标题/小结标题/图片行/录音行/标记行），加反斜杠转义
     static func escapeTextLine(_ line: String) -> String {
         let trimmed = line.trimmingCharacters(in: .whitespaces)
         if trimmed == "---" || trimmed == summaryHeader || isMarkerLine(trimmed)
-            || parseEntryHeader(trimmed) != nil || parseImageLine(trimmed) != nil {
+            || parseEntryHeader(trimmed) != nil || parseImageLine(trimmed) != nil
+            || parseAudioLine(trimmed) != nil {
             return "\\" + line
         }
         return line
@@ -253,6 +264,16 @@ enum MarkdownDiaryCodec {
     /// 匹配 `![任意](images/xxx.jpg)`
     static func parseImageLine(_ line: String) -> String? {
         guard line.hasPrefix("!["), let range = line.range(of: "](images/"), line.hasSuffix(")") else {
+            return nil
+        }
+        let nameStart = range.upperBound
+        let name = String(line[nameStart...].dropLast())
+        return name.isEmpty ? nil : name
+    }
+
+    /// 匹配 `![任意](audio/xxx.m4a)`（语音日记音频行）
+    static func parseAudioLine(_ line: String) -> String? {
+        guard line.hasPrefix("!["), let range = line.range(of: "](audio/"), line.hasSuffix(")") else {
             return nil
         }
         let nameStart = range.upperBound

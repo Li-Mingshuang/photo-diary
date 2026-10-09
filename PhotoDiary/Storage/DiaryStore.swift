@@ -47,6 +47,15 @@ func imageURL(for fileName: String) -> URL {
 imagesURL.appendingPathComponent(fileName)
 }
 
+/// 语音日记音频目录（diaries/audio/）
+var audioURL: URL {
+    rootURL.appendingPathComponent("audio", isDirectory: true)
+}
+
+func audioFileURL(for fileName: String) -> URL {
+    audioURL.appendingPathComponent(fileName)
+}
+
 // MARK: - 月度回顾文件（diaries/monthly/yyyy-MM.md，不参与按天索引）
 
 var monthlyDirectory: URL {
@@ -89,10 +98,13 @@ func saveMonthlySummary(monthKey: String, text: String, model: String, entryCoun
     // MARK: - 写入
 
     @discardableResult
-    func addEntry(_ entry: DiaryEntry, image: UIImage?) throws -> DiaryEntry {
+    func addEntry(_ entry: DiaryEntry, image: UIImage?, audio: URL? = nil) throws -> DiaryEntry {
         var entry = entry
         if let image {
             entry.imageFileName = try saveImage(image, for: entry)
+        }
+        if let audio {
+            entry.audioFileName = try saveAudio(audio, for: entry)
         }
         let key = DayKey.key(for: entry.createdAt)
         var list = entriesByDay[key] ?? []
@@ -128,6 +140,9 @@ func saveMonthlySummary(monthKey: String, text: String, model: String, entryCoun
         if let fileName = entry.imageFileName {
             try? FileManager.default.removeItem(at: imageURL(for: fileName))
         }
+        if let fileName = entry.audioFileName {
+            try? FileManager.default.removeItem(at: audioFileURL(for: fileName))
+        }
         publish()
     }
 
@@ -143,6 +158,17 @@ func saveMonthlySummary(monthKey: String, text: String, model: String, entryCoun
         let timestamp = formatter.string(from: entry.createdAt)
         let fileName = "IMG_\(timestamp)_\(entry.id.uuidString.prefix(8).lowercased()).jpg"
         try data.write(to: imageURL(for: fileName), options: .atomic)
+        return fileName
+    }
+
+    /// 把录音文件拷入 audio/ 目录，返回归档文件名
+    private func saveAudio(_ source: URL, for entry: DiaryEntry) throws -> String {
+        try FileManager.default.createDirectory(at: audioURL, withIntermediateDirectories: true)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd-HHmmss"
+        let timestamp = formatter.string(from: entry.createdAt)
+        let fileName = "REC_\(timestamp)_\(entry.id.uuidString.prefix(8).lowercased()).m4a"
+        try FileManager.default.copyItem(at: source, to: audioFileURL(for: fileName))
         return fileName
     }
 

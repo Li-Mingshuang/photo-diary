@@ -6,6 +6,7 @@ struct DayDetailView: View {
     @ObservedObject var store: DiaryStore
     @ObservedObject var config: LLMConfigStore
     @ObservedObject var profileStore: UserProfileStore
+    @StateObject private var audioPlayer = AudioPlayerService()
 
     @State private var editingEntry: DiaryEntry?
     @State private var regeneratingEntryID: UUID?
@@ -24,14 +25,16 @@ struct DayDetailView: View {
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(day.entries) { entry in
-                            EntryCardView(
-                                entry: entry,
-                                imageURL: entry.imageFileName.map { store.imageURL(for: $0) },
-                                isRegenerating: regeneratingEntryID == entry.id,
-                                onEdit: { editingEntry = entry },
-                                onRegenerate: { startRegenerate(entry) },
-                                onDelete: { store.deleteEntry(entry) }
-                            )
+EntryCardView(
+entry: entry,
+imageURL: entry.imageFileName.map { store.imageURL(for: $0) },
+isPlayingAudio: audioPlayer.playingFileName == entry.audioFileName,
+isRegenerating: regeneratingEntryID == entry.id,
+onEdit: { editingEntry = entry },
+onRegenerate: { startRegenerate(entry) },
+onDelete: { store.deleteEntry(entry) },
+onToggleAudio: { fileName in audioPlayer.toggle(fileName: fileName, url: store.audioFileURL(for: fileName)) }
+)
                         }
                     }
                     .padding()
@@ -195,12 +198,14 @@ struct DayDetailView: View {
 
 /// 单条日记卡片
 private struct EntryCardView: View {
-    let entry: DiaryEntry
-    let imageURL: URL?
-    let isRegenerating: Bool
-    let onEdit: () -> Void
-    let onRegenerate: () -> Void
-    let onDelete: () -> Void
+let entry: DiaryEntry
+let imageURL: URL?
+let isPlayingAudio: Bool
+let isRegenerating: Bool
+let onEdit: () -> Void
+let onRegenerate: () -> Void
+let onDelete: () -> Void
+let onToggleAudio: (String) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -253,6 +258,19 @@ private struct EntryCardView: View {
                     .resizable()
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+
+            // 语音日记：音频播放条
+            if let audioName = entry.audioFileName {
+                Button {
+                    onToggleAudio(audioName)
+                } label: {
+                    Label(isPlayingAudio ? "停止播放" : "播放录音",
+                          systemImage: isPlayingAudio ? "stop.circle.fill" : "play.circle.fill")
+                        .font(.subheadline)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
             }
 
             if isRegenerating && entry.text.isEmpty {

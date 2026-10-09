@@ -290,6 +290,85 @@ final class MarkdownDiaryCodecTests: XCTestCase {
     }
 }
 
+final class VoiceDiaryCodecTests: XCTestCase {
+
+    func testAudioLineRoundTrip() {
+        var entry = DiaryEntry(createdAt: Date(), text: "语音整理后的正文")
+        entry.audioFileName = "REC_20261008-173000-ab12cd34.m4a"
+        let markdown = MarkdownDiaryCodec.render(dayKey: "2026-10-08", entries: [entry])
+        XCTAssertTrue(markdown.contains("![录音](audio/REC_20261008-173000-ab12cd34.m4a)"))
+
+        let parsed = MarkdownDiaryCodec.parse(markdown, dayKey: "2026-10-08")
+        XCTAssertEqual(parsed.count, 1)
+        XCTAssertEqual(parsed[0].audioFileName, entry.audioFileName)
+        XCTAssertEqual(parsed[0].text, "语音整理后的正文")
+    }
+
+    func testAudioAndImageCoexist() {
+        let entry = DiaryEntry(createdAt: Date(), text: "图文音混合")
+        var e = entry
+        e.imageFileName = "IMG_x.jpg"
+        e.audioFileName = "REC_x.m4a"
+        let parsed = MarkdownDiaryCodec.parse(MarkdownDiaryCodec.render(dayKey: "2026-10-08", entries: [e]), dayKey: "2026-10-08")
+        XCTAssertEqual(parsed[0].imageFileName, "IMG_x.jpg")
+        XCTAssertEqual(parsed[0].audioFileName, "REC_x.m4a")
+    }
+
+    func testAudioLineEscapedInText() {
+        // 整行恰好是录音行格式的正文必须转义，否则解析时会被误认为音频引用
+        let entry = DiaryEntry(createdAt: Date(), text: "![笔记](audio/fake.m4a)")
+        let markdown = MarkdownDiaryCodec.render(dayKey: "2026-10-08", entries: [entry])
+        XCTAssertTrue(markdown.contains("\\![笔记](audio/fake.m4a)"))
+        let parsed = MarkdownDiaryCodec.parse(markdown, dayKey: "2026-10-08")
+        XCTAssertNil(parsed[0].audioFileName)
+        XCTAssertEqual(parsed[0].text, "![笔记](audio/fake.m4a)")
+    }
+
+    func testVoicePolishPrompt() {
+        let prompt = PromptBuilder.buildVoicePolishPrompt(
+            template: "时间 {datetime}：\n{transcript}",
+            date: Date(),
+            transcript: "嗯今天下午去了公园",
+            persona: "画像内容"
+        )
+        XCTAssertTrue(prompt.contains("嗯今天下午去了公园"))
+        XCTAssertTrue(prompt.contains("作者背景与文风"))
+        XCTAssertTrue(prompt.contains("画像内容"))
+    }
+}
+
+@MainActor
+final class VoiceDiaryStoreTests: XCTestCase {
+
+    func testAddAndDeleteEntryWithAudio() throws {
+        let dir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("voicestore-test-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: dir) }
+
+        // 假音频文件
+        let tempAudio = dir.appendingPathComponent("temp.m4a")
+        try Data([0x00, 0x01, 0x02]).write(to: tempAudio)
+
+        let store = DiaryStore(rootURL: dir)
+        let entry = DiaryEntry(createdAt: Date(), text: "语音正文")
+        let saved = try store.addEntry(entry, image: nil, audio: tempAudio)
+
+        let audioName = try XCTUnwrap(saved.audioFileName)
+        XCTAssertTrue(audioName.hasPrefix("REC_"))
+        XCTAssertTrue(audioName.hasSuffix(".m4a"))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: store.audioFileURL(for: audioName).path))
+
+        // md 里也应有录音行
+        let markdown = try String(contentsOf: store.markdownURL(forDayKey: DayKey.key(for: entry.createdAt)), encoding: .utf8)
+        XCTAssertTrue(markdown.contains("![录音](audio/\(audioName))"))
+
+        // 删除条目时音频文件一并清理
+        store.deleteEntry(saved)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: store.audioFileURL(for: audioName).path))
+    }
+}
+
 final class MonthlySummaryCodecTests: XCTestCase {
 
     func testRenderAndLoadRoundTrip() throws {

@@ -211,6 +211,36 @@ final class PhotoDiaryUITests: XCTestCase {
         save("20-review-monthly-nokey")
     }
 
+    /// 迭代六：语音日记页冒烟（模拟器无法真正录音，验证入口/页面/降级提示即可）
+    @MainActor
+    func testVoiceEntryPageWithScreenshots() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-UITestResetData"]
+        app.launch()
+
+        XCTAssertTrue(app.navigationBars["光影日记"].waitForExistence(timeout: 5))
+        let addMenu = app.buttons["addEntryMenu"]
+        XCTAssertTrue(addMenu.waitForExistence(timeout: 3))
+        addMenu.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        let voiceButton = app.buttons["语音记录"]
+        XCTAssertTrue(voiceButton.waitForExistence(timeout: 3))
+        voiceButton.tap()
+
+        XCTAssertTrue(app.navigationBars["语音日记"].waitForExistence(timeout: 3))
+        // 模拟器可能弹麦克风/语音识别权限框，允许后继续
+        sleep(2)
+        for _ in 0..<2 {
+            let alert = app.alerts.firstMatch
+            if alert.exists {
+                for label in ["允许", "好", "OK", "Allow", "Don’t Allow", "不允许"] {
+                    if alert.buttons[label].exists { alert.buttons[label].tap(); break }
+                }
+                sleep(1)
+            }
+        }
+        save("21-voice-entry")
+    }
+
     private func save(_ name: String) {
         let screenshot = XCUIScreen.main.screenshot()
         let url = URL(fileURLWithPath: "\(shotDir)/\(name).png")
